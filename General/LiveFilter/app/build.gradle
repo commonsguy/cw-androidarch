@@ -1,0 +1,19 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:26.0.0'
+    compile 'android.arch.lifecycle:runtime:1.0.0-alpha8'
+    compile 'android.arch.lifecycle:extensions:1.0.0-alpha8'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha8'
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+
+  	defaultConfig {
+        minSdkVersion 21
+  		  targetSdkVersion 26
+        applicationId 'com.commonsware.android.livedata.filter'
+  	}
+}
