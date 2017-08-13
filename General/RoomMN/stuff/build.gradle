@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 26
+    versionCode 1
+    versionName "1.0"
+    testApplicationId "com.commonsware.android.room.embedded.test"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+}
+
+dependencies {
+  compile "android.arch.persistence.room:runtime:1.0.0-alpha8"
+  annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha8"
+  compile 'android.arch.lifecycle:runtime:1.0.0-alpha8'
+  compile 'android.arch.lifecycle:extensions:1.0.0-alpha8'
+  annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha8'
+  androidTestCompile "com.android.support:support-annotations:26.0.0"
+  androidTestCompile 'com.android.support.test:rules:0.5'
+}
