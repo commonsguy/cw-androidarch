@@ -41,7 +41,7 @@ public class MainActivity extends SimpleLifecycleActivity {
 
     setTitle(getString(R.string.title, hashCode()));
 
-    RecyclerView rv=(RecyclerView)findViewById(R.id.transcript);
+    RecyclerView rv=findViewById(R.id.transcript);
 
     adapter=new EventLogAdapter(getLastNonConfigurationInstance());
     rv.setAdapter(adapter);
@@ -169,7 +169,7 @@ public class MainActivity extends SimpleLifecycleActivity {
     RowHolder(View itemView) {
       super(itemView);
 
-      tv=(TextView)itemView.findViewById(android.R.id.text1);
+      tv=itemView.findViewById(android.R.id.text1);
     }
 
     void bind(Event event) {
