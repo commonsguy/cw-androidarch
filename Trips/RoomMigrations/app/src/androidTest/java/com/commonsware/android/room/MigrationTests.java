@@ -15,7 +15,6 @@
 package com.commonsware.android.room;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.db.framework.FrameworkSQLiteOpenHelperFactory;
 import android.arch.persistence.room.testing.MigrationTestHelper;
 import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
@@ -37,15 +36,14 @@ public class MigrationTests {
   @Before
   public void setUp() {
     helper=new MigrationTestHelper(InstrumentationRegistry.getInstrumentation(),
-      TripDatabase.class.getCanonicalName(),
-      new FrameworkSQLiteOpenHelperFactory());
+      TripDatabase.class.getCanonicalName());
   }
 
   @Test
   public void test1To2() throws IOException {
     SupportSQLiteDatabase db=helper.createDatabase(DB_NAME, 1);
 
-    db.execSQL("INSERT INTO trips (title) VALUES (NULL)");
+    db.execSQL("INSERT INTO trips (title, duration) VALUES (NULL, 0)");
 
     final Cursor firstResults=db.query("SELECT COUNT(*) FROM trips");
 
@@ -57,7 +55,7 @@ public class MigrationTests {
     db.close();
 
     db=helper.runMigrationsAndValidate(DB_NAME, 2, true,
-      Migrations.BROKEN_1_TO_2);
+      Migrations.FROM_1_TO_2);
 
     final Cursor secondResults=db.query("SELECT COUNT(*) FROM trips");
 

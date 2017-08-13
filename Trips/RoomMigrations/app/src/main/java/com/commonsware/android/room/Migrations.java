@@ -21,9 +21,9 @@ public class Migrations {
   static final Migration FROM_1_TO_2=new Migration(1,2) {
     @Override
     public void migrate(SupportSQLiteDatabase db) {
-      db.execSQL("CREATE TABLE IF NOT EXISTS `lodgings` (`id` TEXT, `title` TEXT, `duration` INTEGER, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `address` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+      db.execSQL("CREATE TABLE IF NOT EXISTS `lodgings` (`id` TEXT, `title` TEXT, `duration` INTEGER NOT NULL, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `address` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
       db.execSQL("CREATE  INDEX `index_lodgings_tripId` ON `lodgings` (`tripId`)");
-      db.execSQL("CREATE TABLE IF NOT EXISTS `flights` (`id` TEXT, `title` TEXT, `duration` INTEGER, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `departingAirport` TEXT, `arrivingAirport` TEXT, `airlineCode` TEXT, `flightNumber` TEXT, `seatNumber` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+      db.execSQL("CREATE TABLE IF NOT EXISTS `flights` (`id` TEXT, `title` TEXT, `duration` INTEGER NOT NULL, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `departingAirport` TEXT, `arrivingAirport` TEXT, `airlineCode` TEXT, `flightNumber` TEXT, `seatNumber` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
       db.execSQL("CREATE  INDEX `index_flights_tripId` ON `flights` (`tripId`)");
     }
   };

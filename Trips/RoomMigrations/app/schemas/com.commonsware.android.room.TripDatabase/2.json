@@ -2,46 +2,53 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "9a2d4a50ce264f5683c0ba7e72dbbae9",
+    "identityHash": "4ebc3fa474b72f9567fafb4658d7c9ce",
     "entities": [
       {
         "tableName": "trips",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER NOT NULL, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "title",
             "columnName": "title",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "duration",
             "columnName": "duration",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "priority",
             "columnName": "priority",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "startTime",
             "columnName": "startTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "creationTime",
             "columnName": "creationTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "updateTime",
             "columnName": "updateTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -55,52 +62,61 @@
       },
       {
         "tableName": "lodgings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `address` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER NOT NULL, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `address` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "title",
             "columnName": "title",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "duration",
             "columnName": "duration",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "priority",
             "columnName": "priority",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "startTime",
             "columnName": "startTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "creationTime",
             "columnName": "creationTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "updateTime",
             "columnName": "updateTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "address",
             "columnName": "address",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "tripId",
             "columnName": "tripId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -135,72 +151,85 @@
       },
       {
         "tableName": "flights",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `departingAirport` TEXT, `arrivingAirport` TEXT, `airlineCode` TEXT, `flightNumber` TEXT, `seatNumber` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER NOT NULL, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, `departingAirport` TEXT, `arrivingAirport` TEXT, `airlineCode` TEXT, `flightNumber` TEXT, `seatNumber` TEXT, `tripId` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`tripId`) REFERENCES `trips`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "title",
             "columnName": "title",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "duration",
             "columnName": "duration",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "priority",
             "columnName": "priority",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "startTime",
             "columnName": "startTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "creationTime",
             "columnName": "creationTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "updateTime",
             "columnName": "updateTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "departingAirport",
             "columnName": "departingAirport",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "arrivingAirport",
             "columnName": "arrivingAirport",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "airlineCode",
             "columnName": "airlineCode",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "flightNumber",
             "columnName": "flightNumber",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "seatNumber",
             "columnName": "seatNumber",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "tripId",
             "columnName": "tripId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -236,7 +265,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9a2d4a50ce264f5683c0ba7e72dbbae9\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4ebc3fa474b72f9567fafb4658d7c9ce\")"
     ]
   }
 }

@@ -2,46 +2,53 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d46bfccddeca286f2948a702a4938d56",
+    "identityHash": "b104ddd3f830a550289d2d7503fc87a2",
     "entities": [
       {
         "tableName": "trips",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `title` TEXT, `duration` INTEGER NOT NULL, `priority` INTEGER, `startTime` INTEGER, `creationTime` INTEGER, `updateTime` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "title",
             "columnName": "title",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "duration",
             "columnName": "duration",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "priority",
             "columnName": "priority",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "startTime",
             "columnName": "startTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "creationTime",
             "columnName": "creationTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           },
           {
             "fieldPath": "updateTime",
             "columnName": "updateTime",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -56,7 +63,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d46bfccddeca286f2948a702a4938d56\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b104ddd3f830a550289d2d7503fc87a2\")"
     ]
   }
 }
