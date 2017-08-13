@@ -15,14 +15,11 @@
 package com.commonsware.android.livedata;
 
 import android.arch.lifecycle.Observer;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,7 +37,7 @@ public class MainActivity extends SimpleLifecycleActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    RecyclerView rv=(RecyclerView)findViewById(R.id.transcript);
+    RecyclerView rv=findViewById(R.id.transcript);
 
     state=(State)getLastNonConfigurationInstance();
 
@@ -65,23 +62,6 @@ public class MainActivity extends SimpleLifecycleActivity {
   @Override
   public Object onRetainNonConfigurationInstance() {
     return(state);
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.actions, menu);
-
-    return(super.onCreateOptionsMenu(menu));
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId()==R.id.launch) {
-      startActivity(new Intent(this, getClass()));
-      return(true);
-    }
-
-    return(super.onOptionsItemSelected(item));
   }
 
   private static class State {
@@ -127,7 +107,7 @@ public class MainActivity extends SimpleLifecycleActivity {
     RowHolder(View itemView) {
       super(itemView);
 
-      tv=(TextView)itemView.findViewById(android.R.id.text1);
+      tv=itemView.findViewById(android.R.id.text1);
     }
 
     void bind(SensorLiveData.Event event) {
