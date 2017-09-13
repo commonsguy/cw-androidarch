@@ -7,19 +7,20 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:support-core-utils:25.3.1'
+    compile 'com.android.support:recyclerview-v7:26.0.2'
+    compile 'com.android.support:support-fragment:26.0.2'
+    compile 'com.android.support:support-core-utils:26.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.commonsware.cwac:crossport:0.1.0'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'android.arch.lifecycle:runtime:1.0.0-alpha3'
-    compile 'android.arch.lifecycle:extensions:1.0.0-alpha3'
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha3'
+    compile 'android.arch.lifecycle:runtime:1.0.0-alpha9'
+    compile 'android.arch.lifecycle:extensions:1.0.0-alpha9'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha9'
 }
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "25.0.3"
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         minSdkVersion 21
