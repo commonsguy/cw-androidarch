@@ -65,7 +65,7 @@ class SensorLiveData extends LiveData<SensorLiveData.Event> {
     }
   };
 
-  class Event {
+  static class Event {
     final Date date=new Date();
     final float[] values;
 
