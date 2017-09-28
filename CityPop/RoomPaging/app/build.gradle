@@ -1,0 +1,34 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
+
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 26
+    applicationId 'com.commonsware.android.citypop.paging'
+    versionCode 1
+    versionName "1.0"
+    testApplicationId "com.commonsware.android.citypop.paging.test"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = ["room.schemaLocation":
+                         "$projectDir/schemas".toString()]
+      }
+    }
+  }
+}
+
+dependencies {
+  compile "android.arch.persistence.room:runtime:1.0.0-beta1"
+  annotationProcessor "android.arch.persistence.room:compiler:1.0.0-beta1"
+  compile "android.arch.paging:runtime:1.0.0-alpha2"
+  compile "com.android.support:support-annotations:26.1.0"
+  compile "com.android.support:recyclerview-v7:26.1.0"
+  compile 'com.android.support:support-fragment:26.1.0'
+  androidTestCompile 'com.android.support.test:rules:0.5'
+  androidTestCompile "com.android.support:support-annotations:26.1.0"
+}
