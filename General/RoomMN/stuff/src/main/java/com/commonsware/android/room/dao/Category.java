@@ -19,6 +19,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import java.util.UUID;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -32,6 +33,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
   indices=@Index(value="parentId"))
 public class Category {
   @PrimaryKey
+  @NonNull
   public final String id;
   public final String title;
   public final String parentId;

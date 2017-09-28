@@ -23,9 +23,9 @@ android {
 }
 
 dependencies {
-  compile "android.arch.persistence.room:runtime:1.0.0-alpha9"
-  annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha9"
-  compile "com.android.support:support-annotations:26.0.2"
+  compile "android.arch.persistence.room:runtime:1.0.0-beta1"
+  annotationProcessor "android.arch.persistence.room:compiler:1.0.0-beta1"
+  compile "com.android.support:support-annotations:26.1.0"
   androidTestCompile 'com.android.support.test:rules:0.5'
-  androidTestCompile "com.android.support:support-annotations:26.0.2"
+  androidTestCompile "com.android.support:support-annotations:26.1.0"
 }

@@ -18,6 +18,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
+import android.support.annotation.NonNull;
 import java.util.Date;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ import java.util.UUID;
 @TypeConverters({TypeTransmogrifier.class})
 class Trip {
   @PrimaryKey
+  @NonNull
   public final String id;
 
   public final String title;

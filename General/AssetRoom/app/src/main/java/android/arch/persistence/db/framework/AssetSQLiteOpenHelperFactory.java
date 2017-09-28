@@ -21,6 +21,6 @@ public class AssetSQLiteOpenHelperFactory
   @Override
   public SupportSQLiteOpenHelper create(SupportSQLiteOpenHelper.Configuration configuration) {
     return new AssetSQLiteOpenHelper(configuration.context, configuration.name,
-      configuration.version, configuration.errorHandler, configuration.callback);
+      configuration.callback.version, configuration.callback);
   }
 }

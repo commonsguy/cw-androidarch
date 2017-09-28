@@ -17,22 +17,23 @@ package com.commonsware.android.room;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import java.util.UUID;
 
 @Entity(tableName = "trips")
 class Trip {
   @PrimaryKey
+  @NonNull
   public final String id;
-
   public final String title;
-  public final int duration;
+  final int duration;
 
   @Ignore
   Trip(String title, int duration) {
     this(UUID.randomUUID().toString(), title, duration);
   }
 
-  Trip(String id, String title, int duration) {
+  Trip(@NonNull String id, String title, int duration) {
     this.id=id;
     this.title=title;
     this.duration=duration;

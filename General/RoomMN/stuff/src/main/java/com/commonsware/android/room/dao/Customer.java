@@ -20,6 +20,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -28,6 +29,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 @Entity(indices={@Index(value="postalCode", unique=true)})
 class Customer {
   @PrimaryKey
+  @NonNull
   public final String id;
 
   public final String postalCode;
@@ -76,8 +78,8 @@ class Customer {
     }
   )
   public static class CategoryJoin {
-    public final String categoryId;
-    public final String customerId;
+    @NonNull public final String categoryId;
+    @NonNull public final String customerId;
 
     public CategoryJoin(String categoryId, String customerId) {
       this.categoryId=categoryId;

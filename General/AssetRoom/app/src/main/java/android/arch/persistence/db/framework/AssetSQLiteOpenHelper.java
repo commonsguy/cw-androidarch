@@ -20,7 +20,6 @@ package android.arch.persistence.db.framework;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -30,16 +29,13 @@ class AssetSQLiteOpenHelper implements SupportSQLiteOpenHelper {
   private final AssetHelper delegate;
 
   AssetSQLiteOpenHelper(Context context, String name, int version,
-                        DatabaseErrorHandler errorHandler,
                         Callback callback) {
-    delegate=createDelegate(context, name, version, errorHandler, callback);
+    delegate=createDelegate(context, name, version, callback);
   }
 
   private AssetHelper createDelegate(Context context, String name,
-                                     int version,
-                                     DatabaseErrorHandler errorHandler,
-                                     final Callback callback) {
-    return new AssetHelper(context, name, version, errorHandler) {
+                                     int version, final Callback callback) {
+    return new AssetHelper(context, name, version) {
       @Override
       public final void onCreate(SQLiteDatabase db) {
         wrappedDb=new FrameworkSQLiteDatabase(db);
@@ -100,9 +96,8 @@ class AssetSQLiteOpenHelper implements SupportSQLiteOpenHelper {
   abstract static class AssetHelper extends SQLiteAssetHelper {
     FrameworkSQLiteDatabase wrappedDb;
 
-    AssetHelper(Context context, String name, int version,
-                DatabaseErrorHandler errorHandler) {
-      super(context, name, null, null, version, errorHandler);
+    AssetHelper(Context context, String name, int version) {
+      super(context, name, null, null, version, null);
     }
 
     SupportSQLiteDatabase getWritableSupportDatabase() {

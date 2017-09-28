@@ -32,12 +32,12 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
   indices=@Index("tripId"))
 @TypeConverters({TypeTransmogrifier.class})
 class Flight extends Plan {
-  public final String departingAirport;
-  public final String arrivingAirport;
-  public final String airlineCode;
-  public final String flightNumber;
-  public final String seatNumber;
-  public final String tripId;
+  final String departingAirport;
+  final String arrivingAirport;
+  final String airlineCode;
+  final String flightNumber;
+  final String seatNumber;
+  final String tripId;
 
   @Ignore
   Flight(String title, int duration, Priority priority, Date startTime,

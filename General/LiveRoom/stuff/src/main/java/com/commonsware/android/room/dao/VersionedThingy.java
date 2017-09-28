@@ -18,13 +18,15 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 import java.util.UUID;
 
 @Entity(tableName="thingy", primaryKeys={"id", "version_code"})
 class VersionedThingy {
-  public final String id;
+  @NonNull public final String id;
 
   @ColumnInfo(name="version_code")
+  @NonNull
   public final int versionCode;
 
   @Ignore

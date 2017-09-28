@@ -43,7 +43,7 @@ public class MigrationTests {
   public void test1To2() throws IOException {
     SupportSQLiteDatabase db=helper.createDatabase(DB_NAME, 1);
 
-    db.execSQL("INSERT INTO trips (title, duration) VALUES (NULL, 0)");
+    db.execSQL("INSERT INTO trips (id, title, duration) VALUES (1, NULL, 0)");
 
     final Cursor firstResults=db.query("SELECT COUNT(*) FROM trips");
 

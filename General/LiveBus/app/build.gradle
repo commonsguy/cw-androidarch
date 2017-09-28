@@ -8,11 +8,11 @@ repositories {
 
 dependencies {
     compile 'com.commonsware.cwac:wakeful:1.1.0'
-    compile 'com.android.support:recyclerview-v7:26.0.2'
-    compile 'com.android.support:support-fragment:26.0.2'
-    compile 'android.arch.lifecycle:runtime:1.0.0-alpha9'
-    compile 'android.arch.lifecycle:extensions:1.0.0-alpha9'
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha9'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support:support-fragment:26.1.0'
+    compile 'android.arch.lifecycle:runtime:1.0.0'
+    compile 'android.arch.lifecycle:extensions:1.0.0-beta1'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-beta1'
 }
 
 android {
