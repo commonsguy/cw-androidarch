@@ -88,13 +88,15 @@ public class DaoTests {
     final LiveData<List<Customer>>
       liveResult=store.findByPostalCodes(10, firstCustomer.postalCode);
 
-    liveResult.observeForever(new Observer<List<Customer>>() {
+    Observer<List<Customer>> observer=new Observer<List<Customer>>() {
       @Override
       public void onChanged(@Nullable List<Customer> customers) {
         DaoTests.this.customers=customers;
         responseLatch.countDown();
       }
-    });
+    };
+
+    liveResult.observeForever(observer);
 
     responseLatch.await();
 
@@ -133,5 +135,7 @@ public class DaoTests {
 
     assertEquals(1, deleted);
     assertEquals(0, store.getCustomerCount());
+
+    liveResult.removeObserver(observer);
   }
 }
