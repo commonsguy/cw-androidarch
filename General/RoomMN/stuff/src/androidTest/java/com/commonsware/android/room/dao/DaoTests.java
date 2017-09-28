@@ -247,13 +247,13 @@ public class DaoTests {
     assertEquals(0, store.getJoinCount());
   }
 
-  void assertIdentical(Category one, Category two) {
+  private void assertIdentical(Category one, Category two) {
     assertEquals(one.id, two.id);
     assertEquals(one.title, two.title);
     assertEquals(one.parentId, two.parentId);
   }
 
-  void assertIdentical(Customer one, Customer two) {
+  private void assertIdentical(Customer one, Customer two) {
     assertEquals(one.id, two.id);
     assertEquals(one.displayName, two.displayName);
     assertEquals(one.postalCode, two.postalCode);
