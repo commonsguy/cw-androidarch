@@ -57,7 +57,7 @@ public class MainActivity extends SimpleLifecycleActivity {
       new LiveTransmogrifiers.Confirmer<SensorLiveData.Event>() {
         @Override
         public boolean test(SensorLiveData.Event event) {
-          return(event.values[0]>40 && event.values[0]<60);
+          return(event.values[0]>20 && event.values[0]<40);
         }
       });
 
