@@ -110,7 +110,7 @@ public class MainActivity extends RecyclerViewActivity implements
     getLoaderManager().initLoader(0, null, this);
   }
 
-  class VideoAdapter extends RecyclerView.Adapter<RowController> {
+  private class VideoAdapter extends RecyclerView.Adapter<RowController> {
     Cursor videos=null;
 
     @Override
