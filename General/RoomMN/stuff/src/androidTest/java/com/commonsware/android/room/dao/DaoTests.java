@@ -139,7 +139,7 @@ public class DaoTests {
   public void simpleJoin() throws InterruptedException {
     final HashSet<String> tags=new HashSet<>();
 
-    tags.add("scuplture");
+    tags.add("sculpture");
     tags.add("bronze");
     tags.add("slow-pay");
 
