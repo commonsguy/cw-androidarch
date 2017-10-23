@@ -18,6 +18,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 import java.util.List;
 
 @Dao
@@ -64,12 +65,15 @@ interface StuffStore {
   @Delete
   void delete(Category... categories);
 
+  @Transaction
   @Query("SELECT * FROM categories WHERE parentId IS NULL")
   CategoryTuple findRootCategoryTuple();
 
+  @Transaction
   @Query("SELECT * FROM categories WHERE parentId=:parentId")
   List<CategoryTuple> findChildCategoryTuples(String parentId);
 
+  @Transaction
   @Query("SELECT * FROM categories WHERE parentId IS NULL")
   CategoryShadow findRootCategoryShadow();
 }
