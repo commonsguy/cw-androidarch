@@ -18,23 +18,25 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.JobIntentService;
 import android.support.v4.app.NotificationCompat;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 import java.util.Calendar;
 import java.util.Random;
 
-public class ScheduledService extends WakefulIntentService {
+public class ScheduledService extends JobIntentService {
   static final MutableLiveData<Intent> BUS=new MutableLiveData<>();
+  private static final int UNIQUE_JOB_ID=1337;
   private static int NOTIFY_ID=1337;
   private Random rng=new Random();
 
-  public ScheduledService() {
-    super("ScheduledService");
+  static void enqueueWork(Context ctxt, Intent i) {
+    enqueueWork(ctxt, ScheduledService.class, UNIQUE_JOB_ID, i);
   }
 
   @Override
-  protected void doWakefulWork(Intent intent) {
+  protected void onHandleWork(Intent intent) {
     Intent event=new Intent(EventLogFragment.ACTION_EVENT);
     long now=Calendar.getInstance().getTimeInMillis();
     int random=rng.nextInt();

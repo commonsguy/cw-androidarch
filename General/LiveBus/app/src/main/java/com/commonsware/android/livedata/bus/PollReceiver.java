@@ -20,7 +20,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
-import com.commonsware.cwac.wakeful.WakefulIntentService;
 
 public class PollReceiver extends BroadcastReceiver {
   private static final int PERIOD=60000; // 1 minute
@@ -29,7 +28,8 @@ public class PollReceiver extends BroadcastReceiver {
   @Override
   public void onReceive(Context ctxt, Intent i) {
     if (i.getAction() == null) {
-      WakefulIntentService.sendWakefulWork(ctxt, ScheduledService.class);
+      ScheduledService.enqueueWork(ctxt,
+        new Intent(ctxt, ScheduledService.class));
     }
     else {
       scheduleAlarms(ctxt);
