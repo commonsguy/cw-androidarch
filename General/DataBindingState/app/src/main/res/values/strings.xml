@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">DataBindingState</string>
+  <string name="menu_workaround">Apply Workaround</string>
+</resources>
