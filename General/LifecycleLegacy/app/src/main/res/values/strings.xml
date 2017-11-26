@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Lifecycle Demo</string>
+	<string name="title">Lifecycle Demo: %x</string>
+  <string name="menu_another">Start Another</string>
+</resources>

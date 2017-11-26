@@ -1,0 +1,22 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'android.arch.lifecycle:runtime:1.0.3'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+
+	defaultConfig {
+      minSdkVersion 21
+		  targetSdkVersion 26
+	}
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
