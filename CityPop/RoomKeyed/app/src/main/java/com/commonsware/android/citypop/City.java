@@ -76,7 +76,7 @@ class City {
     @Query("SELECT * FROM cities ORDER BY population DESC LIMIT :count")
     List<City> initialByPopulation(int count);
 
-    @Query("SELECT * FROM cities WHERE population < :key ORDER BY population ASC LIMIT :count")
+    @Query("SELECT * FROM cities WHERE population < :key ORDER BY population DESC LIMIT :count")
     List<City> beforeByPopulation(int key, int count);
 
     @Query("SELECT * FROM cities WHERE population > :key ORDER BY population DESC LIMIT :count")

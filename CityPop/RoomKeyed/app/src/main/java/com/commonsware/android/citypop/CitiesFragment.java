@@ -44,12 +44,7 @@ public class CitiesFragment extends RecyclerViewFragment {
     CitiesViewModel vm=ViewModelProviders.of(this).get(CitiesViewModel.class);
     final CityAdapter adapter=new CityAdapter(getActivity().getLayoutInflater());
 
-    vm.pagedCities.observe(this, new Observer<PagedList<City>>() {
-      @Override
-      public void onChanged(@Nullable PagedList<City> cities) {
-        adapter.setList(cities);
-      }
-    });
+    vm.pagedCities.observe(this, cities -> adapter.setList(cities));
 
     setAdapter(adapter);
   }
