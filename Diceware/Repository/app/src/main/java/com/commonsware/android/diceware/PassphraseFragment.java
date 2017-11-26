@@ -8,8 +8,8 @@
   OF ANY KIND, either express or implied. See the License for the specific
   language governing permissions and limitations under the License.
 
-  Covered in detail in the book _The Busy Coder's Guide to Android Development_
-    https://commonsware.com/Android
+  Covered in detail in the book _Android's Architecture Components_
+    https://commonsware.com/AndroidArch
  */
 
 package com.commonsware.android.diceware;
