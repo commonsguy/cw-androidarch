@@ -26,7 +26,6 @@ import java.util.List;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class TripsFragment extends RecyclerViewFragment {
@@ -57,12 +56,7 @@ public class TripsFragment extends RecyclerViewFragment {
         LinearLayoutManager.VERTICAL));
 
     unsub();
-    sub=trips.subscribe(new Consumer<List<Trip>>() {
-      @Override
-      public void accept(List<Trip> trips) throws Exception {
-        setAdapter(trips);
-      }
-    });
+    sub=trips.subscribe(this::setAdapter);
   }
 
   @Override
@@ -114,7 +108,7 @@ public class TripsFragment extends RecyclerViewFragment {
     RowHolder(View itemView) {
       super(itemView);
 
-      title=(TextView)itemView.findViewById(android.R.id.text1);
+      title=itemView.findViewById(android.R.id.text1);
     }
 
     void bind(Trip trip) {

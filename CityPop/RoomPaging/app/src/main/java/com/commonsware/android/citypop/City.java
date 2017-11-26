@@ -34,7 +34,7 @@ class City {
   final String city;
   final int population;
 
-  City(String id, String country, String city, int population) {
+  City(@NonNull String id, String country, String city, int population) {
     this.id=id;
     this.country=country;
     this.city=city;

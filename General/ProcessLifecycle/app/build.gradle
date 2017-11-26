@@ -7,15 +7,15 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.android.support:support-fragment:26.1.0'
-    compile 'com.android.support:support-core-utils:26.1.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.commonsware.cwac:crossport:0.1.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'android.arch.lifecycle:runtime:1.0.3'
-    compile 'android.arch.lifecycle:extensions:1.0.0-rc1'
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-rc1'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:support-fragment:26.1.0'
+    implementation 'com.android.support:support-core-utils:26.1.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.commonsware.cwac:crossport:0.2.0'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation 'android.arch.lifecycle:runtime:1.0.3'
+    implementation 'android.arch.lifecycle:extensions:1.0.0'
+    implementation "android.arch.lifecycle:common-java8:1.0.0"
 }
 
 android {
@@ -26,5 +26,10 @@ android {
         minSdkVersion 21
         targetSdkVersion 26
         applicationId 'com.commonsware.android.mw.lifecycle'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }

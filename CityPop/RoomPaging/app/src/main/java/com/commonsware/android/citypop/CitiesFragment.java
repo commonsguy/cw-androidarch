@@ -14,13 +14,10 @@
 
 package com.commonsware.android.citypop;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.arch.paging.PagedList;
 import android.arch.paging.PagedListAdapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.recyclerview.extensions.DiffCallback;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,12 +41,7 @@ public class CitiesFragment extends RecyclerViewFragment {
     CitiesViewModel vm=ViewModelProviders.of(this).get(CitiesViewModel.class);
     final CityAdapter adapter=new CityAdapter(getActivity().getLayoutInflater());
 
-    vm.pagedCities.observe(this, new Observer<PagedList<City>>() {
-      @Override
-      public void onChanged(@Nullable PagedList<City> cities) {
-        adapter.setList(cities);
-      }
-    });
+    vm.pagedCities.observe(this, cities -> adapter.setList(cities));
 
     setAdapter(adapter);
   }

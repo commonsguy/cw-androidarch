@@ -132,7 +132,7 @@ public class TripsFragment extends RecyclerViewFragment {
     RowHolder(View itemView) {
       super(itemView);
 
-      title=(TextView)itemView.findViewById(android.R.id.text1);
+      title=itemView.findViewById(android.R.id.text1);
     }
 
     void bind(Trip trip) {

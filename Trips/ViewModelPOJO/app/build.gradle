@@ -21,14 +21,19 @@ android {
   sourceSets {
     androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
   }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 dependencies {
   compile "com.android.support:recyclerview-v7:26.1.0"
   compile 'com.android.support:support-fragment:26.1.0'
-  compile "android.arch.persistence.room:runtime:1.0.0-rc1"
-  annotationProcessor "android.arch.persistence.room:compiler:1.0.0-rc1"
+  compile "android.arch.persistence.room:runtime:1.0.0"
+  annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
   compile 'android.arch.lifecycle:runtime:1.0.3'
-  compile 'android.arch.lifecycle:extensions:1.0.0-rc1'
-  annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-rc1'
+  compile 'android.arch.lifecycle:extensions:1.0.0'
+  annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
 }

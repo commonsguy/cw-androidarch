@@ -14,12 +14,9 @@
 
 package com.commonsware.android.livedata;
 
-import android.arch.core.util.Function;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -44,18 +41,9 @@ public class MainActivity extends FragmentActivity {
     adapter=new EventLogAdapter();
     rv.setAdapter(adapter);
 
-    Transformations.map(viewModel.getSensorLiveData(),
-      new Function<SensorLiveData.Event, RowModel>() {
-        @Override
-        public RowModel apply(SensorLiveData.Event event) {
-          return(new RowModel(event));
-        }
-      }).observe(this, new Observer<RowModel>() {
-      @Override
-      public void onChanged(@Nullable RowModel rowModel) {
-        adapter.add(rowModel);
-      }
-    });
+    Transformations
+      .map(viewModel.getSensorLiveData(), RowModel::new)
+      .observe(this, rowModel -> adapter.add(rowModel));
   }
 
   private class EventLogAdapter extends RecyclerView.Adapter<RowHolder> {

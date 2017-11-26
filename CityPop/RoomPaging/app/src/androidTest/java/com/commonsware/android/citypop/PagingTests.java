@@ -159,12 +159,8 @@ public class PagingTests {
       assertEquals(all.get(loadedPosition+i), pagedCities.get(loadedPosition+i));
     }
 
-    InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-      @Override
-      public void run() {
-        livePages.removeObserver(CITY_OBSERVER);
-      }
-    });
+    InstrumentationRegistry.getInstrumentation().runOnMainSync(
+      () -> livePages.removeObserver(CITY_OBSERVER));
     pagedCities.detach();
   }
 

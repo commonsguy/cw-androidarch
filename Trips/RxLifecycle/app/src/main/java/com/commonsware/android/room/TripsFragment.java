@@ -15,9 +15,7 @@
 package com.commonsware.android.room;
 
 import android.arch.lifecycle.LiveDataReactiveStreams;
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,13 +45,8 @@ public class TripsFragment extends RecyclerViewFragment {
       .observeOn(AndroidSchedulers.mainThread())
       .toFlowable();
 
-    LiveDataReactiveStreams.fromPublisher(trips).observe(this,
-      new Observer<List<Trip>>() {
-        @Override
-        public void onChanged(@Nullable List<Trip> trips) {
-          setAdapter(trips);
-        }
-      });
+    LiveDataReactiveStreams.fromPublisher(trips)
+      .observe(this, this::setAdapter);
   }
 
   private void setAdapter(List<Trip> trips) {
@@ -93,7 +86,7 @@ public class TripsFragment extends RecyclerViewFragment {
     RowHolder(View itemView) {
       super(itemView);
 
-      title=(TextView)itemView.findViewById(android.R.id.text1);
+      title=itemView.findViewById(android.R.id.text1);
     }
 
     void bind(Trip trip) {

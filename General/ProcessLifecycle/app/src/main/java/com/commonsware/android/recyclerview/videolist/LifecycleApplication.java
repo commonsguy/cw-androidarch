@@ -15,14 +15,16 @@
 package com.commonsware.android.recyclerview.videolist;
 
 import android.app.Application;
+import android.arch.lifecycle.DefaultLifecycleObserver;
 import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.lifecycle.ProcessLifecycleOwner;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 public class LifecycleApplication extends Application
-  implements LifecycleObserver {
+  implements DefaultLifecycleObserver {
   @Override
   public void onCreate() {
     super.onCreate();
@@ -30,33 +32,33 @@ public class LifecycleApplication extends Application
     ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-  public void created() {
+  @Override
+  public void onCreate(@NonNull LifecycleOwner owner) {
     Log.d(getClass().getSimpleName(), "ON_CREATE");
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_START)
-  public void started() {
+  @Override
+  public void onStart(@NonNull LifecycleOwner owner) {
     Log.d(getClass().getSimpleName(), "ON_START");
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-  public void resumed() {
+  @Override
+  public void onResume(@NonNull LifecycleOwner owner) {
     Log.d(getClass().getSimpleName(), "ON_RESUME");
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-  public void paused() {
+  @Override
+  public void onPause(@NonNull LifecycleOwner owner) {
     Log.d(getClass().getSimpleName(), "ON_PAUSE");
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-  public void stopped() {
+  @Override
+  public void onStop(@NonNull LifecycleOwner owner) {
     Log.d(getClass().getSimpleName(), "ON_STOP");
   }
 
-  @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-  public void destroyed() {
+  @Override
+  public void onDestroy(@NonNull LifecycleOwner owner) {
     Log.d(getClass().getSimpleName(), "ON_DESTROY");
   }
 }

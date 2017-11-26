@@ -14,10 +14,8 @@
 
 package com.commonsware.android.room;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,22 +39,19 @@ public class TripsFragment extends RecyclerViewFragment {
     TripRosterViewModel vm=
       ViewModelProviders.of(this).get(TripRosterViewModel.class);
 
-    vm.allTrips.observe(this, new Observer<List<Trip>>() {
-      @Override
-      public void onChanged(@Nullable List<Trip> trips) {
-        setAdapter(new TripsAdapter(trips, getActivity().getLayoutInflater()));
+    vm.allTrips.observe(this, trips -> {
+      setAdapter(new TripsAdapter(trips, getActivity().getLayoutInflater()));
 
-        if (trips==null || trips.size()==0) {
-          final TripStore store=TripDatabase.get(getActivity()).tripStore();
+      if (trips==null || trips.size()==0) {
+        final TripStore store=TripDatabase.get(getActivity()).tripStore();
 
-          new Thread() {
-            @Override
-            public void run() {
-              store.insert(new Trip("Vacation!", 10080, Priority.MEDIUM, new Date()),
-                new Trip("Business Trip", 4320, Priority.OMG, new Date()));
-            }
-          }.start();
-        }
+        new Thread() {
+          @Override
+          public void run() {
+            store.insert(new Trip("Vacation!", 10080, Priority.MEDIUM, new Date()),
+              new Trip("Business Trip", 4320, Priority.OMG, new Date()));
+          }
+        }.start();
       }
     });
   }
@@ -94,7 +89,7 @@ public class TripsFragment extends RecyclerViewFragment {
     RowHolder(View itemView) {
       super(itemView);
 
-      title=(TextView)itemView.findViewById(android.R.id.text1);
+      title=itemView.findViewById(android.R.id.text1);
     }
 
     void bind(Trip trip) {
