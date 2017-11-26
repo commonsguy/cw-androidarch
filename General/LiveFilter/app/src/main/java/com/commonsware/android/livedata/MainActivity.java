@@ -15,11 +15,10 @@
 package com.commonsware.android.livedata;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends SimpleLifecycleActivity {
+public class MainActivity extends FragmentActivity {
   private EventLogAdapter adapter;
   private State state;
 
@@ -40,7 +39,7 @@ public class MainActivity extends SimpleLifecycleActivity {
 
     RecyclerView rv=findViewById(R.id.transcript);
 
-    state=(State)getLastNonConfigurationInstance();
+    state=(State)getLastCustomNonConfigurationInstance();
 
     if (state==null) {
       state=new State();
@@ -54,23 +53,13 @@ public class MainActivity extends SimpleLifecycleActivity {
 
     final LiveData<SensorLiveData.Event> filtered=
       LiveTransmogrifiers.filter(state.sensorLiveData,
-      new LiveTransmogrifiers.Confirmer<SensorLiveData.Event>() {
-        @Override
-        public boolean test(SensorLiveData.Event event) {
-          return(event.values[0]>20 && event.values[0]<40);
-        }
-      });
+        event -> (event.values[0]>20 && event.values[0]<40));
 
-    filtered.observe(this, new Observer<SensorLiveData.Event>() {
-      @Override
-      public void onChanged(@Nullable SensorLiveData.Event event) {
-        adapter.add(event);
-      }
-    });
+    filtered.observe(this, event -> adapter.add(event));
   }
 
   @Override
-  public Object onRetainNonConfigurationInstance() {
+  public Object onRetainCustomNonConfigurationInstance() {
     return(state);
   }
 

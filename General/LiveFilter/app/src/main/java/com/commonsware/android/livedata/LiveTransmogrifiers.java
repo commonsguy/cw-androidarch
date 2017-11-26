@@ -16,10 +16,8 @@ package com.commonsware.android.livedata;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 class LiveTransmogrifiers {
   interface Confirmer<T> {
@@ -31,12 +29,9 @@ class LiveTransmogrifiers {
                                 @NonNull final Confirmer<X> confirmer) {
     final MediatorLiveData<X> result=new MediatorLiveData<>();
 
-    result.addSource(source, new Observer<X>() {
-      @Override
-      public void onChanged(@Nullable X x) {
-        if (confirmer.test(x)) {
-          result.setValue(x);
-        }
+    result.addSource(source, x -> {
+      if (confirmer.test(x)) {
+        result.setValue(x);
       }
     });
 

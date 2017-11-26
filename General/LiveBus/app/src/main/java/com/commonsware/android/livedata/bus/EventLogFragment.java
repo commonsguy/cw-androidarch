@@ -15,10 +15,9 @@
 package com.commonsware.android.livedata.bus;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class EventLogFragment extends LifecycleListFragment {
+public class EventLogFragment extends ListFragment {
   static final String EXTRA_RANDOM="r";
   static final String EXTRA_TIME="t";
   static final String ACTION_EVENT="e";
@@ -48,12 +47,7 @@ public class EventLogFragment extends LifecycleListFragment {
 
     setListAdapter(adapter);
 
-    ScheduledService.BUS.observe(this, new Observer<Intent>() {
-      @Override
-      public void onChanged(@Nullable Intent intent) {
-        adapter.add(intent);
-      }
-    });
+    ScheduledService.BUS.observe(this, intent -> adapter.add(intent));
   }
 
   private class EventLogAdapter extends ArrayAdapter<Intent> {
@@ -61,7 +55,7 @@ public class EventLogFragment extends LifecycleListFragment {
 
     EventLogAdapter() {
       super(getActivity(), android.R.layout.simple_list_item_1,
-            new ArrayList<Intent>());
+        new ArrayList<>());
     }
 
     @SuppressLint("DefaultLocale")

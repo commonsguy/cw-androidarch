@@ -3,9 +3,9 @@ apply plugin: 'com.android.application'
 dependencies {
   compile 'com.android.support:recyclerview-v7:26.1.0'
   compile 'com.android.support:support-fragment:26.1.0'
-  compile 'android.arch.lifecycle:runtime:1.0.0'
-  compile 'android.arch.lifecycle:extensions:1.0.0-rc1'
-  annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-rc1'
+  compile 'android.arch.lifecycle:runtime:1.0.3'
+  compile 'android.arch.lifecycle:extensions:1.0.0'
+  annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
   provided 'com.google.auto.value:auto-value:1.5.1'
   annotationProcessor 'com.google.auto.value:auto-value:1.5.1'
 }
@@ -19,4 +19,9 @@ android {
   		  targetSdkVersion 26
         applicationId "com.commonsware.android.livedata.autovalue"
   	}
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }

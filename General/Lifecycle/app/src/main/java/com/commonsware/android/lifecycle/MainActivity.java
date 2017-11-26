@@ -14,11 +14,12 @@
 
 package com.commonsware.android.lifecycle;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.OnLifecycleEvent;
+import android.arch.lifecycle.DefaultLifecycleObserver;
+import android.arch.lifecycle.LifecycleOwner;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends SimpleLifecycleActivity {
+public class MainActivity extends FragmentActivity {
   private EventLogAdapter adapter;
 
   @Override
@@ -43,14 +44,14 @@ public class MainActivity extends SimpleLifecycleActivity {
 
     RecyclerView rv=findViewById(R.id.transcript);
 
-    adapter=new EventLogAdapter(getLastNonConfigurationInstance());
+    adapter=new EventLogAdapter(getLastCustomNonConfigurationInstance());
     rv.setAdapter(adapter);
 
     getLifecycle().addObserver(new LObserver(adapter));
   }
 
   @Override
-  public Object onRetainNonConfigurationInstance() {
+  public Object onRetainCustomNonConfigurationInstance() {
     return(adapter.getModel());
   }
 
@@ -71,40 +72,40 @@ public class MainActivity extends SimpleLifecycleActivity {
     return(super.onOptionsItemSelected(item));
   }
 
-  static class LObserver implements LifecycleObserver {
+  static class LObserver implements DefaultLifecycleObserver {
     private final EventLogAdapter adapter;
 
     LObserver(EventLogAdapter adapter) {
       this.adapter=adapter;
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    void created() {
+    @Override
+    public void onCreate(@NonNull LifecycleOwner owner) {
       adapter.add("ON_CREATE");
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    void started() {
+    @Override
+    public void onStart(@NonNull LifecycleOwner owner) {
       adapter.add("ON_START");
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    void resumed() {
+    @Override
+    public void onResume(@NonNull LifecycleOwner owner) {
       adapter.add("ON_RESUME");
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    void paused() {
+    @Override
+    public void onPause(@NonNull LifecycleOwner owner) {
       adapter.add("ON_PAUSE");
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    void stopped() {
+    @Override
+    public void onStop(@NonNull LifecycleOwner owner) {
       adapter.add("ON_STOP");
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    void destroyed() {
+    @Override
+    public void onDestroy(@NonNull LifecycleOwner owner) {
       adapter.add("ON_DESTROY");
     }
   }
