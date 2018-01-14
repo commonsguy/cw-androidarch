@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+  <data>
+
+    <variable
+      name="model"
+      type="com.commonsware.android.todo.impl.ToDoModel" />
+
+    <variable
+      name="holder"
+      type="com.commonsware.android.todo.ui.RosterRowHolder" />
+  </data>
+
+  <android.support.constraint.ConstraintLayout style="@style/activated"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:activated="@{holder.isActivated()}"
+    android:onClick="@{() -> holder.onClick()}"
+    android:onLongClick="@{() -> holder.onLongClick()}"
+    android:orientation="horizontal"
+    android:padding="@dimen/row_padding">
+
+    <CheckBox
+      android:id="@+id/checkbox"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:checked="@{model.isCompleted()}"
+      android:onCheckedChanged="@{(cb, isChecked) -> holder.completeChanged(model, isChecked)}"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:layout_constraintBottom_creator="1"
+      tools:layout_constraintLeft_creator="1"
+      tools:layout_constraintTop_creator="1" />
+
+    <TextView
+      android:id="@+id/desc"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:ellipsize="end"
+      android:maxLines="3"
+      android:text="@{model.description()}"
+      android:textSize="@dimen/desc_size"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toEndOf="@+id/checkbox"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:layout_constraintBottom_creator="1"
+      tools:layout_constraintLeft_creator="1"
+      tools:layout_constraintTop_creator="1"
+      tools:text="Description goes here" />
+  </android.support.constraint.ConstraintLayout>
+</layout>

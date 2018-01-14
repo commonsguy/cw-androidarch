@@ -1,0 +1,121 @@
+/***
+ Copyright (c) 2017 CommonsWare, LLC
+ Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ use this file except in compliance with the License. You may obtain a copy
+ of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
+ by applicable law or agreed to in writing, software distributed under the
+ License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ OF ANY KIND, either express or implied. See the License for the specific
+ language governing permissions and limitations under the License.
+
+ Covered in detail in the book _Android's Architecture Components_
+ https://commonsware.com/AndroidArch
+ */
+
+package com.commonsware.android.todo.ui;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.view.inputmethod.InputMethodManager;
+import com.commonsware.android.todo.R;
+import com.commonsware.android.todo.impl.ToDoModel;
+
+public class MainActivity extends FragmentActivity
+  implements RosterListFragment.Contract, DisplayFragment.Contract,
+  EditFragment.Contract {
+  private static final String BACK_STACK_SHOW="showModel";
+  private boolean isDualPane=false;
+  private DisplayFragment display;
+  
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    isDualPane=(findViewById(R.id.detail)!=null);
+
+    if (getSupportFragmentManager().findFragmentById(R.id.master)==null) {
+      getSupportFragmentManager().beginTransaction()
+        .add(R.id.master, new RosterListFragment())
+        .commit();
+
+      if (isDualPane) {
+        display=DisplayFragment.newInstance(null);
+
+        getSupportFragmentManager().beginTransaction()
+          .replace(getDetailContainer(), display)
+          .commit();
+      }
+    }
+  }
+
+  @Override
+  public void showModel(ToDoModel model) {
+    if (display==null) {
+      getSupportFragmentManager().beginTransaction()
+        .replace(getDetailContainer(), DisplayFragment.newInstance(model))
+        .addToBackStack(BACK_STACK_SHOW)
+        .commit();
+    }
+    else {
+      display.showModel(model);
+    }
+  }
+
+  @Override
+  public void addModel() {
+    getSupportFragmentManager().beginTransaction()
+      .replace(getDetailContainer(), EditFragment.newInstance(null))
+      .addToBackStack(null)
+      .commit();
+  }
+
+  @Override
+  public void editModel(ToDoModel model) {
+    getSupportFragmentManager().beginTransaction()
+      .replace(getDetailContainer(), EditFragment.newInstance(model))
+      .addToBackStack(null)
+      .commit();
+  }
+
+  @Override
+  public void finishEdit(ToDoModel model, boolean deleted) {
+    hideSoftInput();
+
+    if (deleted) {
+      if (isDualPane) {
+        getSupportFragmentManager().popBackStack();
+      }
+      else {
+        getSupportFragmentManager().popBackStack(BACK_STACK_SHOW,
+          FragmentManager.POP_BACK_STACK_INCLUSIVE);
+      }
+    }
+    else {
+      getSupportFragmentManager().popBackStack();
+
+      if (display!=null) {
+        display.showModel(model);
+      }
+    }
+  }
+
+  @Override
+  public boolean shouldShowTitle() {
+    return(!isDualPane);
+  }
+
+  private int getDetailContainer() {
+    return(isDualPane ? R.id.detail : R.id.master);
+  }
+
+  // based on https://stackoverflow.com/a/21574135/115145
+
+  private void hideSoftInput() {
+    if (getCurrentFocus()!=null && getCurrentFocus().getWindowToken()!=null) {
+      ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE))
+        .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+  }
+}

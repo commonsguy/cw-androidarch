@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">ToDo MVI</string>
+  <string name="menu_add">Add</string>
+  <string name="dlg_title">Edit Description</string>
+  <string name="menu_edit">Edit</string>
+  <string name="menu_delete">Delete</string>
+  <string name="msg_crash">Oops, we crashed!</string>
+  <string name="created_on">Created on:</string>
+  <string name="description">description</string>
+  <string name="notes">notes</string>
+  <string name="menu_save">Save</string>
+  <string name="menu_filter_all">All</string>
+  <string name="menu_filter_completed">Completed</string>
+  <string name="menu_filter_outstanding">Outstanding</string>
+  <string name="menu_filter">Filter</string>
+  <string name="msg_empty">Click the + icon to add a todo item!</string>
+  <string name="msg_empty_filter">Add a todo item, or change your filter to show other items!</string>
+  <string name="menu_export">Export</string>
+  <string name="msg_export">Report exported!</string>
+  <string name="menu_share">Share</string>
+  <string name="notif_title">To-Do Upload Complete</string>
+  <string name="notif_text">Click to view the gist!</string>
+  <string name="menu_upload">Upload</string>
+  <string name="msg_upload">Upload started!</string>
+  <string name="is_completed">Item is completed</string>
+  <string name="back_description">Cancel edit</string>
+  <string name="error_description">Please provide a description!</string>
+
+  <plurals name="snackbar_delete">
+    <item quantity="one">Delete this item?</item>
+    <item quantity="other">Delete %d items?</item>
+  </plurals>
+
+</resources>
