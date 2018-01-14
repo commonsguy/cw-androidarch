@@ -14,12 +14,9 @@
 
 package com.commonsware.android.citypop;
 
-import android.arch.paging.LivePagedListProvider;
-import android.arch.paging.TiledDataSource;
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Query;
 import android.support.annotation.NonNull;
@@ -68,6 +65,6 @@ class City {
     List<City> allByPopulation();
 
     @Query("SELECT * FROM cities ORDER BY population DESC")
-    LivePagedListProvider<?, City> pagedByPopulation();
+    DataSource.Factory<Integer, City> pagedByPopulation();
   }
 }

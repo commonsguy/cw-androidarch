@@ -83,12 +83,14 @@ public class PagingTests {
   }
 */
 
+/*
   @Test
   public void pagedSequential() throws InterruptedException {
     LivePagedListProvider<?, City> provider=store.pagedByPopulation();
 
     testPaging(provider.create(null, 50));
   }
+*/
 
 /*
   @Test

@@ -17,6 +17,8 @@ package com.commonsware.android.citypop;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
+import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 
 public class CitiesViewModel extends AndroidViewModel {
@@ -25,9 +27,11 @@ public class CitiesViewModel extends AndroidViewModel {
   public CitiesViewModel(Application app) {
     super(app);
 
-    pagedCities=CityDatabase.get(app)
-      .cityStore()
-      .pagedByPopulation()
-      .create(null, 50);
+    DataSource.Factory<Integer, City> factory=
+      CityDatabase.get(app).cityStore().pagedByPopulation();
+    LivePagedListBuilder<Integer, City> pagedListBuilder=
+      new LivePagedListBuilder<>(factory, 50);
+
+    pagedCities=pagedListBuilder.build();
   }
 }
