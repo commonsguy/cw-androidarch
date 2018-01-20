@@ -48,6 +48,10 @@ public class RosterRowHolder
     return (adapter.isSelected(getAdapterPosition()));
   }
 
+  public boolean isCurrent() {
+    return adapter.isCurrent(binding.getModel());
+  }
+
   public void completeChanged(ToDoModel model, boolean isChecked) {
     if (model.isCompleted()!=isChecked) {
       adapter.modify(model, isChecked);

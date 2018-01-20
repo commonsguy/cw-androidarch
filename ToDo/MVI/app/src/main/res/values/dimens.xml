@@ -11,4 +11,5 @@
   <dimen name="action_item_padding">8dp</dimen>
   <dimen name="checked_icon_size">48dp</dimen>
   <dimen name="empty_size">16sp</dimen>
+  <dimen name="divider_width">2dp</dimen>
 </resources>

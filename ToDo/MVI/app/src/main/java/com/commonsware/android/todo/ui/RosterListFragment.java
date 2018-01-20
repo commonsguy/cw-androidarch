@@ -60,6 +60,13 @@ public class RosterListFragment extends AbstractRosterFragment {
   private MenuItem filter, filterAll, filterCompleted, filterOutstanding;
 
   @Override
+  public void onCreate(@Nullable Bundle state) {
+    super.onCreate(state);
+
+    startObserving();
+  }
+
+  @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
@@ -87,7 +94,6 @@ public class RosterListFragment extends AbstractRosterFragment {
     filterOutstanding=menu.findItem(R.id.outstanding);
 
     adapter.updateFilter();
-    startObserving();
   }
 
   @Override
@@ -140,33 +146,36 @@ public class RosterListFragment extends AbstractRosterFragment {
 
   @Override
   void render(ViewState state) {
-    if (state.cause()==null) {
-      adapter.setState(state);
+    if (adapter!=null) {
+      if (state.cause()==null) {
+        adapter.setState(state);
 
-      if (state.isLoaded() && state.filteredItems().size()==0) {
-        getEmptyView().setVisibility(View.VISIBLE);
+        if (state.isLoaded() && state.filteredItems().size()==0) {
+          getEmptyView().setVisibility(View.VISIBLE);
 
-        if (state.items().size()>0) {
-          getEmptyView().setText(R.string.msg_empty_filter);
+          if (state.items().size()>0) {
+            getEmptyView().setText(R.string.msg_empty_filter);
+          }
+          else {
+            getEmptyView().setText(R.string.msg_empty);
+          }
         }
         else {
-          getEmptyView().setText(R.string.msg_empty);
+          getEmptyView().setVisibility(View.GONE);
+        }
+
+        if (state.getSelectionCount()==0 && snackbar!=null &&
+          snackbar.isShown()) {
+          snackbar.dismiss();
         }
       }
       else {
-        getEmptyView().setVisibility(View.GONE);
+        Snackbar
+          .make(getView(), R.string.msg_crash, Snackbar.LENGTH_LONG)
+          .show();
+        Log.e(getClass().getSimpleName(), "Exception in obtaining view state",
+          state.cause());
       }
-
-      if (state.getSelectionCount()==0 && snackbar!=null && snackbar.isShown()) {
-        snackbar.dismiss();
-      }
-    }
-    else {
-      Snackbar
-        .make(getView(), R.string.msg_crash, Snackbar.LENGTH_LONG)
-        .show();
-      Log.e(getClass().getSimpleName(), "Exception in obtaining view state",
-        state.cause());
     }
   }
 

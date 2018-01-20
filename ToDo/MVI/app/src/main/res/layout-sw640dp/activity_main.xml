@@ -23,7 +23,7 @@
     tools:ignore="UselessLeaf">
 
     <View
-      android:layout_width="2dp"
+      android:layout_width="@dimen/divider_width"
       android:layout_height="match_parent"
       android:layout_gravity="end"
       android:background="@color/primary" />

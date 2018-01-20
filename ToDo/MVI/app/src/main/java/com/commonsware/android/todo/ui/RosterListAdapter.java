@@ -117,11 +117,15 @@ class RosterListAdapter extends AbstractRosterFragment.BaseRosterAdapter<RosterR
     return (getState().isSelected(position));
   }
 
+  boolean isCurrent(ToDoModel model) {
+    return true;
+  }
+
   void toggleSelected(int position) {
     if (isSelected(position)) {
       host.process(Action.unselect(position));
     }
-    else {
+    else   {
       host.process(Action.select(position));
     }
   }

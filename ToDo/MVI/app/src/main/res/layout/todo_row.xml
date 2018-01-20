@@ -10,6 +10,8 @@
     <variable
       name="holder"
       type="com.commonsware.android.todo.ui.RosterRowHolder" />
+
+    <import type="android.view.View" />
   </data>
 
   <android.support.constraint.ConstraintLayout style="@style/activated"
@@ -21,7 +23,6 @@
     android:activated="@{holder.isActivated()}"
     android:onClick="@{() -> holder.onClick()}"
     android:onLongClick="@{() -> holder.onLongClick()}"
-    android:orientation="horizontal"
     android:padding="@dimen/row_padding">
 
     <CheckBox
@@ -47,12 +48,23 @@
       android:text="@{model.description()}"
       android:textSize="@dimen/desc_size"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/selected"
       app:layout_constraintStart_toEndOf="@+id/checkbox"
       app:layout_constraintTop_toTopOf="parent"
       tools:layout_constraintBottom_creator="1"
       tools:layout_constraintLeft_creator="1"
       tools:layout_constraintTop_creator="1"
       tools:text="Description goes here" />
+
+    <View
+      android:id="@+id/selected"
+      android:layout_width="@dimen/divider_width"
+      android:layout_height="0dp"
+      android:layout_marginStart="8dp"
+      android:background="@color/accent"
+      android:visibility="@{holder.current ? View.VISIBLE : View.GONE}"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
   </android.support.constraint.ConstraintLayout>
 </layout>

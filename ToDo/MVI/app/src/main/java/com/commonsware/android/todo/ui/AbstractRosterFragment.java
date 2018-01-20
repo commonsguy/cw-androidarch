@@ -37,6 +37,13 @@ abstract class AbstractRosterFragment extends Fragment {
   private RosterViewModel viewModel;
   private TextView empty;
 
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    viewModel=ViewModelProviders.of(getActivity()).get(RosterViewModel.class);
+  }
+
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater,
@@ -50,7 +57,6 @@ abstract class AbstractRosterFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
 
     rv=view.findViewById(R.id.items);
-    viewModel=ViewModelProviders.of(getActivity()).get(RosterViewModel.class);
     empty=view.findViewById(R.id.empty);
     empty.setVisibility(View.INVISIBLE);
   }

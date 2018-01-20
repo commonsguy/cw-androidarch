@@ -40,6 +40,7 @@ public class DisplayFragment extends AbstractRosterFragment {
   private LinearLayoutManager layoutManager;
   private DisplayViewModel displayViewModel;
   private boolean ignoreNextScroll=false;
+  private MenuItem editMenu;
 
   interface Contract {
     void editModel(ToDoModel model);
@@ -62,12 +63,20 @@ public class DisplayFragment extends AbstractRosterFragment {
   }
 
   @Override
-  public void onViewCreated(View view, @Nullable Bundle state) {
-    super.onViewCreated(view, state);
+  public void onCreate(@Nullable Bundle state) {
+    super.onCreate(state);
 
     DisplayViewModelFactory factory=new DisplayViewModelFactory(state);
 
     displayViewModel=ViewModelProviders.of(this, factory).get(DisplayViewModel.class);
+
+    startObserving();
+  }
+
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle state) {
+    super.onViewCreated(view, state);
+
     layoutManager=new LinearLayoutManager(getActivity(),
       LinearLayoutManager.HORIZONTAL, false);
     getRecyclerView().setLayoutManager(layoutManager);
@@ -99,7 +108,8 @@ public class DisplayFragment extends AbstractRosterFragment {
       tb.setTitle(R.string.app_name);
     }
 
-    startObserving();
+    editMenu=tb.getMenu().findItem(R.id.edit);
+    editMenu.setVisible(false);
   }
 
   @Override
@@ -121,17 +131,20 @@ public class DisplayFragment extends AbstractRosterFragment {
 
   @Override
   void render(ViewState state) {
-    adapter.setState(state);
+    if (adapter!=null) {
+      adapter.setState(state);
 
-    if (!displayViewModel.hasCurrentModelId()) {
-      String initialModelId=getInitialModelId();
+      if (!displayViewModel.hasCurrentModelId()) {
+        String initialModelId=getInitialModelId();
 
-      if (initialModelId!=null) {
-        displayViewModel.setCurrentModelId(initialModelId);
+        if (initialModelId!=null) {
+          displayViewModel.setCurrentModelId(initialModelId);
+        }
       }
-    }
 
-    updatePager(false);
+      editMenu.setVisible(state.filteredItems().size()>0);
+      updatePager(false);
+    }
   }
 
   void updatePager(boolean smooth) {

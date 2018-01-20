@@ -60,6 +60,14 @@ public class EditFragment extends Fragment {
     return(result);
   }
 
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    viewModel=ViewModelProviders.of(getActivity()).get(RosterViewModel.class);
+    viewModel.stateStream().observe(this, this::render);
+  }
+
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater,
@@ -75,8 +83,6 @@ public class EditFragment extends Fragment {
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    viewModel=ViewModelProviders.of(getActivity()).get(RosterViewModel.class);
-    viewModel.stateStream().observe(this, this::render);
 
     Toolbar tb=view.findViewById(R.id.toolbar);
 
@@ -105,18 +111,20 @@ public class EditFragment extends Fragment {
   }
 
   private void render(ViewState viewState) {
-    String id=getModelId();
+    if (binding!=null) {
+      String id=getModelId();
 
-    if (id!=null) {
-      model=viewState.find(id);
-    }
-
-    if (model!=null) {
-      if (!hadSavedState) {
-        binding.setModel(model);
+      if (id!=null) {
+        model=viewState.find(id);
       }
 
-      deleteItem.setVisible(true);
+      if (model!=null) {
+        if (!hadSavedState) {
+          binding.setModel(model);
+        }
+
+        deleteItem.setVisible(true);
+      }
     }
   }
 
