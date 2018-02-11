@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 26
-  buildToolsVersion "26.0.2"
+  compileSdkVersion 27
+  buildToolsVersion "27.0.3"
 
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 26
+    targetSdkVersion 27
     versionCode 1
     versionName "1.0"
     testApplicationId "com.commonsware.android.room.embedded.test"
@@ -20,11 +20,10 @@ android {
 }
 
 dependencies {
-  compile "android.arch.persistence.room:runtime:1.0.0"
+  implementation "android.arch.persistence.room:runtime:1.0.0"
   annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
-  compile 'android.arch.lifecycle:runtime:1.0.3'
-  compile 'android.arch.lifecycle:extensions:1.0.0'
-  annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
-  androidTestCompile "com.android.support:support-annotations:26.1.0"
-  androidTestCompile 'com.android.support.test:rules:1.0.1'
+  implementation 'android.arch.lifecycle:runtime:1.1.0'
+  implementation 'android.arch.lifecycle:livedata:1.1.0'
+  androidTestImplementation "com.android.support:support-annotations:27.0.2"
+  androidTestImplementation 'com.android.support.test:rules:1.0.1'
 }
