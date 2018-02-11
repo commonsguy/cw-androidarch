@@ -16,7 +16,7 @@ package com.commonsware.android.room;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -77,7 +77,7 @@ public class TripUnitTests {
 
         return(null);
       }
-    }).when(store).insert(Matchers.<Trip>anyVararg());
+    }).when(store).insert(ArgumentMatchers.any());
 
     doAnswer(new Answer() {
       @Override
@@ -90,7 +90,7 @@ public class TripUnitTests {
 
         return(null);
       }
-    }).when(store).update(Matchers.<Trip>anyVararg());
+    }).when(store).update(ArgumentMatchers.any());
 
     doAnswer(new Answer() {
       @Override
@@ -103,7 +103,7 @@ public class TripUnitTests {
 
         return(null);
       }
-    }).when(store).delete(Matchers.<Trip>anyVararg());
+    }).when(store).delete(ArgumentMatchers.any());
   }
 
   @Test
