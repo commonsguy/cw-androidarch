@@ -14,11 +14,7 @@
 
 package com.commonsware.android.todo.ui;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -31,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Toolbar;
 import com.commonsware.android.todo.R;
 import com.commonsware.android.todo.databinding.TodoDisplayBinding;
+import com.commonsware.android.todo.impl.Action;
 import com.commonsware.android.todo.impl.ToDoModel;
 import com.commonsware.android.todo.impl.ViewState;
 
@@ -38,9 +35,9 @@ public class DisplayFragment extends AbstractRosterFragment {
   private final SnapHelper snapperCarr=new PagerSnapHelper();
   private PageAdapter adapter;
   private LinearLayoutManager layoutManager;
-  private DisplayViewModel displayViewModel;
   private boolean ignoreNextScroll=false;
   private MenuItem editMenu;
+  private String currentModelId;
 
   interface Contract {
     void editModel(ToDoModel model);
@@ -66,10 +63,6 @@ public class DisplayFragment extends AbstractRosterFragment {
   public void onCreate(@Nullable Bundle state) {
     super.onCreate(state);
 
-    DisplayViewModelFactory factory=new DisplayViewModelFactory(state);
-
-    displayViewModel=ViewModelProviders.of(this, factory).get(DisplayViewModel.class);
-
     startObserving();
   }
 
@@ -93,7 +86,7 @@ public class DisplayFragment extends AbstractRosterFragment {
           int position=getCurrentPosition();
 
           if (position>=0) {
-            displayViewModel.setCurrentModel(adapter.getItem(position));
+            process(Action.show(adapter.getItem(position)));
           }
         }
       }
@@ -110,13 +103,8 @@ public class DisplayFragment extends AbstractRosterFragment {
 
     editMenu=tb.getMenu().findItem(R.id.edit);
     editMenu.setVisible(false);
-  }
 
-  @Override
-  public void onSaveInstanceState(Bundle outState) {
-    super.onSaveInstanceState(outState);
-
-    displayViewModel.onSaveInstanceState(outState);
+    getRecyclerView().post(() -> render(currentState())); // needed in case returned here via BACK
   }
 
   @Override
@@ -131,43 +119,40 @@ public class DisplayFragment extends AbstractRosterFragment {
 
   @Override
   void render(ViewState state) {
-    if (adapter!=null) {
+    if (adapter!=null && state!=null) {
       adapter.setState(state);
 
-      if (!displayViewModel.hasCurrentModelId()) {
+      if (state.current()==null) {
         String initialModelId=getInitialModelId();
 
         if (initialModelId!=null) {
-          displayViewModel.setCurrentModelId(initialModelId);
+          currentModelId=initialModelId;
         }
+      }
+      else {
+        currentModelId=state.current().id();
       }
 
       editMenu.setVisible(state.filteredItems().size()>0);
-      updatePager(false);
+      updatePager();
     }
   }
 
-  void updatePager(boolean smooth) {
-    if (adapter.getItemCount()>0 && displayViewModel.getCurrentModelId()!=null) {
-      int position=adapter.getPosition(displayViewModel.getCurrentModelId());
+  void updatePager() {
+    if (adapter.getItemCount()>0 && currentModelId!=null) {
+      int position=adapter.getPosition(currentModelId);
 
       if (position>=0) {
-        if (smooth) {
-          getRecyclerView().smoothScrollToPosition(position);
-        }
-        else {
-          getRecyclerView().scrollToPosition(position);
-        }
-
+        ignoreNextScroll=true;
+        getRecyclerView().scrollToPosition(position);
         adapter.notifyItemChanged(position);
       }
     }
   }
 
   void showModel(ToDoModel model) {
-    ignoreNextScroll=true;
-    displayViewModel.setCurrentModelId(model.id());
-    updatePager(true);
+    currentModelId=model.id();
+    updatePager();
   }
 
   private int getCurrentPosition() {
@@ -206,52 +191,6 @@ public class DisplayFragment extends AbstractRosterFragment {
         model.createdOn().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS,
         DateUtils.WEEK_IN_MILLIS, 0));
       binding.executePendingBindings();
-    }
-  }
-
-  private static class DisplayViewModel extends ViewModel {
-    private static final String STATE_CURRENT="currentModelId";
-    private String currentModelId;
-
-    DisplayViewModel(Bundle state) {
-      if (state!=null) {
-        currentModelId=state.getString(STATE_CURRENT);
-      }
-    }
-
-    String getCurrentModelId() {
-      return(currentModelId);
-    }
-
-    void setCurrentModel(ToDoModel model) {
-      setCurrentModelId(model.id());
-    }
-
-    void setCurrentModelId(String currentModelId) {
-      this.currentModelId=currentModelId;
-    }
-
-    boolean hasCurrentModelId() {
-      return(getCurrentModelId()!=null);
-    }
-
-    void onSaveInstanceState(Bundle state) {
-      state.putString(STATE_CURRENT, currentModelId);
-    }
-  }
-
-  private static class DisplayViewModelFactory implements
-    ViewModelProvider.Factory {
-    private final Bundle state;
-
-    private DisplayViewModelFactory(Bundle state) {
-      this.state=state;
-    }
-
-    @NonNull
-    @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-      return((T)new DisplayViewModel(state));
     }
   }
 }

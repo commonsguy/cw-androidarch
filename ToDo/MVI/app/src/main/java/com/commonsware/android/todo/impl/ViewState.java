@@ -31,6 +31,7 @@ public abstract class ViewState {
   abstract Set<Integer> selections();
   @Nullable public abstract Throwable cause();
   public abstract FilterMode filterMode();
+  @Nullable public abstract ToDoModel current();
 
   static Builder builder() {
     return(new AutoValue_ViewState.Builder()
@@ -51,6 +52,7 @@ public abstract class ViewState {
 
     return(toBuilder()
       .items(Collections.unmodifiableList(models))
+      .current(model)
       .build());
   }
 
@@ -114,6 +116,12 @@ public abstract class ViewState {
   ViewState unselectedAll() {
     return(toBuilder()
       .selections(Collections.unmodifiableSet(new HashSet<>()))
+      .build());
+  }
+
+  ViewState show(ToDoModel current) {
+    return(toBuilder()
+      .current(current)
       .build());
   }
 
@@ -192,6 +200,7 @@ public abstract class ViewState {
       .cause(cause())
       .items(items())
       .selections(selections())
+      .current(current())
       .filterMode(filterMode()));
   }
 
@@ -202,6 +211,7 @@ public abstract class ViewState {
     abstract Builder selections(Set<Integer> positions);
     abstract Builder cause(Throwable cause);
     abstract Builder filterMode(FilterMode mode);
+    abstract Builder current(ToDoModel current);
     abstract ViewState build();
   }
 

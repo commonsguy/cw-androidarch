@@ -99,10 +99,24 @@ class RosterListAdapter extends AbstractRosterFragment.BaseRosterAdapter<RosterR
 
   @Override
   void setState(ViewState state) {
+    ToDoModel oldCurrent=null;
+
+    if (getState()!=null) {
+      oldCurrent=getState().current();
+    }
+
     super.setState(state);
 
     updateFilter();
     updateActionMode();
+
+    if (oldCurrent!=state.current()) {
+      if (oldCurrent!=null) {
+        notifyItemChanged(state.getFilteredPosition(oldCurrent.id()));
+      }
+
+      notifyItemChanged(state.getFilteredPosition(state.current().id()));
+    }
   }
 
   boolean isInMultiSelectMode() {
@@ -118,7 +132,11 @@ class RosterListAdapter extends AbstractRosterFragment.BaseRosterAdapter<RosterR
   }
 
   boolean isCurrent(ToDoModel model) {
-    return true;
+    return(shouldShowCurrent() && getState().current()==model);
+  }
+
+  private boolean shouldShowCurrent() {
+    return host.shouldShowCurrent();
   }
 
   void toggleSelected(int position) {
@@ -132,6 +150,7 @@ class RosterListAdapter extends AbstractRosterFragment.BaseRosterAdapter<RosterR
 
   void showModel(ToDoModel model) {
     ((RosterListFragment.Contract)host.getActivity()).showModel(model);
+    host.process(Action.show(model));
   }
 
   List<ToDoModel> getModels() {

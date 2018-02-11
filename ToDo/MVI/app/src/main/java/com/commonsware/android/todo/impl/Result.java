@@ -47,6 +47,10 @@ public abstract class Result {
     return(new AutoValue_Result_UnselectedAll());
   }
 
+  static Result showed(ToDoModel current) {
+    return(new AutoValue_Result_Showed(current));
+  }
+
   static Result filter(FilterMode mode) {
     return(new AutoValue_Result_Filter(mode));
   }
@@ -78,6 +82,11 @@ public abstract class Result {
 
   @AutoValue
   static abstract class UnselectedAll extends Result {
+  }
+
+  @AutoValue
+  static abstract class Showed extends Result {
+    public abstract ToDoModel current();
   }
 
   @AutoValue

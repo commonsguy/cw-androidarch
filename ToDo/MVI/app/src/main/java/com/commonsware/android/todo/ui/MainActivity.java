@@ -58,9 +58,6 @@ public class MainActivity extends FragmentActivity
         .addToBackStack(BACK_STACK_SHOW)
         .commit();
     }
-    else {
-      display.showModel(model);
-    }
   }
 
   @Override
@@ -104,6 +101,11 @@ public class MainActivity extends FragmentActivity
   @Override
   public boolean shouldShowTitle() {
     return(!isDualPane);
+  }
+
+  @Override
+  public boolean shouldShowCurrent() {
+    return(isDualPane);
   }
 
   private int getDetailContainer() {

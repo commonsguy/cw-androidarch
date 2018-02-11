@@ -51,6 +51,7 @@ public class RosterListFragment extends AbstractRosterFragment {
   interface Contract {
     void addModel();
     void showModel(ToDoModel model);
+    boolean shouldShowCurrent();
   }
 
   private static final int REQUEST_CREATE=1337;
@@ -287,5 +288,9 @@ public class RosterListFragment extends AbstractRosterFragment {
           break;
       }
     }
+  }
+
+  public boolean shouldShowCurrent() {
+    return(((Contract)getActivity()).shouldShowCurrent());
   }
 }

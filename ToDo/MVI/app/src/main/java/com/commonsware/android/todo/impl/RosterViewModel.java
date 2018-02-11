@@ -18,6 +18,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.LiveDataReactiveStreams;
+import java.util.List;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.annotations.NonNull;
@@ -57,6 +58,10 @@ public class RosterViewModel extends AndroidViewModel {
     return(states);
   }
 
+  public ViewState currentState() {
+    return(stateStream().getValue());
+  }
+
   public void process(Action action) {
     actionSubject.onNext(action);
   }
@@ -73,10 +78,13 @@ public class RosterViewModel extends AndroidViewModel {
       return(state.delete(((Result.Deleted)result).models()));
     }
     else if (result instanceof Result.Loaded) {
+      List<ToDoModel> models=((Result.Loaded)result).models();
+
       return(ViewState.builder()
         .isLoaded(true)
-        .items(((Result.Loaded)result).models())
+        .items(models)
         .filterMode(((Result.Loaded)result).filterMode())
+        .current(models.size()==0 ? null : models.get(0))
         .build());
     }
     else if (result instanceof Result.Selected) {
@@ -87,6 +95,9 @@ public class RosterViewModel extends AndroidViewModel {
     }
     else if (result instanceof Result.UnselectedAll) {
       return(state.unselectedAll());
+    }
+    else if (result instanceof Result.Showed) {
+      return(state.show(((Result.Showed)result).current()));
     }
     else if (result instanceof Result.Filter) {
       return(state.filtered(((Result.Filter)result).filterMode()));

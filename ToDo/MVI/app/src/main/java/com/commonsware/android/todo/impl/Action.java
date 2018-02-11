@@ -47,6 +47,10 @@ public abstract class Action {
     return(new UnselectAll());
   }
 
+  public static Action show(ToDoModel model) {
+    return(new AutoValue_Action_Show(model));
+  }
+
   public static Action filter(FilterMode mode) {
     return(new AutoValue_Action_Filter(mode));
   }
@@ -82,6 +86,11 @@ public abstract class Action {
 
   static class UnselectAll extends Action {
 
+  }
+
+  @AutoValue
+  static abstract class Show extends Action {
+    public abstract ToDoModel current();
   }
 
   @AutoValue

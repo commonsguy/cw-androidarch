@@ -66,6 +66,9 @@ public class Controller {
     else if (action instanceof Action.UnselectAll) {
       unselectAll();
     }
+    else if (action instanceof Action.Show) {
+      show(((Action.Show)action).current());
+    }
     else if (action instanceof Action.Filter) {
       filter(((Action.Filter)action).filterMode());
     }
@@ -109,6 +112,10 @@ public class Controller {
 
   private void unselectAll() {
     resultSubject.onNext(Result.unselectedAll());
+  }
+
+  private void show(ToDoModel current) {
+    resultSubject.onNext(Result.showed(current));
   }
 
   private void filter(FilterMode mode) {

@@ -25,9 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.commonsware.android.todo.R;
-import com.commonsware.android.todo.impl.ToDoModel;
 import com.commonsware.android.todo.impl.Action;
 import com.commonsware.android.todo.impl.RosterViewModel;
+import com.commonsware.android.todo.impl.ToDoModel;
 import com.commonsware.android.todo.impl.ViewState;
 
 abstract class AbstractRosterFragment extends Fragment {
@@ -67,6 +67,10 @@ abstract class AbstractRosterFragment extends Fragment {
 
   protected void startObserving() {
     viewModel.stateStream().observe(this, this::render);
+  }
+
+  protected ViewState currentState() {
+    return(viewModel.currentState());
   }
 
   protected RecyclerView getRecyclerView() {
