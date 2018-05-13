@@ -18,7 +18,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedListAdapter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.DiffCallback;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +41,7 @@ public class CitiesFragment extends RecyclerViewFragment {
     CitiesViewModel vm=ViewModelProviders.of(this).get(CitiesViewModel.class);
     final CityAdapter adapter=new CityAdapter(getActivity().getLayoutInflater());
 
-    vm.pagedCities.observe(this, cities -> adapter.setList(cities));
+    vm.pagedCities.observe(this, adapter::submitList);
 
     setAdapter(adapter);
   }
@@ -98,7 +98,7 @@ public class CitiesFragment extends RecyclerViewFragment {
     }
   }
 
-  static final DiffCallback<City> CITIES_DIFF=new DiffCallback<City>() {
+  static final DiffUtil.ItemCallback<City> CITIES_DIFF=new DiffUtil.ItemCallback<City>() {
     @Override
     public boolean areItemsTheSame(@NonNull City oldItem,
                                    @NonNull City newItem) {
