@@ -4,7 +4,6 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.WAKE_LOCK" />
 
   <supports-screens
     android:anyDensity="true"
@@ -49,9 +48,6 @@
         android:name="android.support.FILE_PROVIDER_PATHS"
         android:resource="@xml/provider_paths" />
     </provider>
-    <service
-      android:name=".util.GistUploadService"
-      android:permission="android.permission.BIND_JOB_SERVICE" />
   </application>
 
 </manifest>

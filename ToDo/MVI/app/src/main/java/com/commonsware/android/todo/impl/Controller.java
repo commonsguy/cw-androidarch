@@ -36,7 +36,7 @@ public class Controller {
 
   public void subscribeToActions(Observable<Action> actionStream) {
     actionStream
-      .observeOn(Schedulers.io())
+      .observeOn(Schedulers.single())
       .subscribe(this::processImpl);
   }
 
@@ -98,7 +98,7 @@ public class Controller {
         (models, mode) -> (Result.loaded(models, mode)));
 
     loader
-      .subscribeOn(Schedulers.io())
+      .subscribeOn(Schedulers.single())
       .subscribe(resultSubject::onNext);
   }
 

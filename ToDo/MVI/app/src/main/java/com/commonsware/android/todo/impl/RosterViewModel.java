@@ -45,7 +45,7 @@ public class RosterViewModel extends AndroidViewModel {
 
     states=LiveDataReactiveStreams
       .fromPublisher(controller.resultStream()
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.single())
         .compose(toView)
         .cache()
         .toFlowable(BackpressureStrategy.LATEST)

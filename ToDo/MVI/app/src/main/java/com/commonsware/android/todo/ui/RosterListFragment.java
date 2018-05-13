@@ -38,7 +38,6 @@ import com.commonsware.android.todo.impl.FilterMode;
 import com.commonsware.android.todo.impl.RosterReport;
 import com.commonsware.android.todo.impl.ToDoModel;
 import com.commonsware.android.todo.impl.ViewState;
-import com.commonsware.android.todo.util.GistUploadService;
 import com.commonsware.android.todo.util.UriReportWriter;
 import com.commonsware.cwac.crossport.design.widget.Snackbar;
 import java.io.File;
@@ -126,11 +125,6 @@ public class RosterListFragment extends AbstractRosterFragment {
       case R.id.share:
         share();
         return(true);
-
-      case R.id.upload:
-        GistUploadService.upload(getActivity(), adapter.getState().filterMode());
-        Toast.makeText(getActivity(), R.string.msg_upload, Toast.LENGTH_SHORT).show();
-        return(true);
     }
 
     return(super.onOptionsItemSelected(item));
@@ -214,7 +208,7 @@ public class RosterListFragment extends AbstractRosterFragment {
 
   private void completeExport(Uri uri) {
     exportReport(uri)
-      .subscribeOn(Schedulers.io())
+      .subscribeOn(Schedulers.single())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(this::viewReport);
   }
@@ -250,7 +244,7 @@ public class RosterListFragment extends AbstractRosterFragment {
 
     Single.create(uriBuilder)
       .flatMap(uri -> (exportReport(uri)))
-      .subscribeOn(Schedulers.io())
+      .subscribeOn(Schedulers.single())
       .observeOn(AndroidSchedulers.mainThread())
       .subscribe(this::shareReport);
   }
