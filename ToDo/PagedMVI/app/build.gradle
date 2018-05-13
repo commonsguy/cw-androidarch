@@ -61,7 +61,7 @@ android {
 
 def supportVer="27.0.2"
 def lifecycleVer="1.1.0"
-def roomVer="1.0.0"
+def roomVer="1.1.0"
 def autoValueVer="1.5.1"
 def retroVer="2.3.0"
 def canaryVer="1.5.4"
