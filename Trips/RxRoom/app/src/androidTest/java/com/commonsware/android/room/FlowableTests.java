@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.functions.Consumer;
@@ -37,6 +38,7 @@ public class FlowableTests {
   TripStore store;
   CountDownLatch latch;
   Trip foundTrip;
+  List<Trip> foundTrips;
 
   @Before
   public void setUp() {
@@ -54,12 +56,9 @@ public class FlowableTests {
     assertEquals(0, store.flowAllTrips().blockingFirst().size());
 
     latch=new CountDownLatch(1);
-    store.flowTripById(TEST_ID).subscribe(new Consumer<Trip>() {
-      @Override
-      public void accept(Trip trip) throws Exception {
-        foundTrip=trip;
-        latch.countDown();
-      }
+    store.flowTripById(TEST_ID).subscribe(trip -> {
+      foundTrip=trip;
+      latch.countDown();
     });
 
     assertFalse("Should have timed out!", latch.await(100, TimeUnit.MILLISECONDS));
@@ -93,6 +92,47 @@ public class FlowableTests {
     store.delete(updated);
     assertFalse("Should have timed out!", latch.await(100, TimeUnit.MILLISECONDS));
     assertEquals(0, store.flowAllTrips().blockingFirst().size());
+  }
+
+  @Test
+  public void liveList() throws InterruptedException {
+    latch=new CountDownLatch(1);
+    store.flowAllTrips().subscribe(trips -> {
+      foundTrips=trips;
+      latch.countDown();
+    });
+
+    assertTrue("Should not have timed out!", latch.await(1, TimeUnit.SECONDS));
+    assertEquals(0, foundTrips.size());
+    foundTrips=null;
+
+    final Trip first=new Trip(TEST_ID, "Foo", 2880, Priority.LOW, new Date());
+
+    assertNotNull(first.id);
+    assertNotEquals(0, first.id.length());
+
+    latch=new CountDownLatch(1);
+    store.insert(first);
+    assertTrue("Should not have timed out!", latch.await(1, TimeUnit.SECONDS));
+    assertEquals(1, foundTrips.size());
+    assertTrue(areIdentical(first, foundTrips.get(0)));
+    foundTrips=null;
+
+    final Trip updated=
+      new Trip(first.id, "Foo!!!", 1440, Priority.MEDIUM, first.startTime,
+        first.creationTime, first.updateTime);
+
+    latch=new CountDownLatch(1);
+    store.update(updated);
+    assertTrue("Should not have timed out!", latch.await(1, TimeUnit.SECONDS));
+    assertEquals(1, foundTrips.size());
+    assertTrue(areIdentical(updated, foundTrips.get(0)));
+    foundTrips=null;
+
+    latch=new CountDownLatch(1);
+    store.delete(updated);
+    assertTrue("Should not have timed out!", latch.await(1, TimeUnit.SECONDS));
+    assertEquals(0, foundTrips.size());
   }
 
   private boolean areIdentical(Plan one, Plan two) {

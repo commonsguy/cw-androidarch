@@ -41,7 +41,7 @@ public class TripsFragment extends RecyclerViewFragment {
     TripStore store=TripDatabase.get(getActivity()).tripStore();
 
     trips=store.maybeAllTrips()
-      .subscribeOn(Schedulers.io())
+      .subscribeOn(Schedulers.single())
       .cache()
       .observeOn(AndroidSchedulers.mainThread());
   }
