@@ -41,7 +41,7 @@ public class TripsFragment extends RecyclerViewFragment {
     TripStore store=TripDatabase.get(getActivity()).tripStore();
 
     Flowable<List<Trip>> trips=store.maybeAllTrips()
-      .subscribeOn(Schedulers.io())
+      .subscribeOn(Schedulers.single())
       .observeOn(AndroidSchedulers.mainThread())
       .toFlowable();
 
