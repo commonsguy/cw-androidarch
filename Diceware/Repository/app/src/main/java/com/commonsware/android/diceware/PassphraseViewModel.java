@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import java.util.List;
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
 class PassphraseViewModel extends ViewModel {
@@ -73,7 +74,9 @@ class PassphraseViewModel extends ViewModel {
   }
 
   void refresh() {
-    repo.getWords(source, count).subscribe(wordsSubject::onNext);
+    repo.getWords(source, count)
+      .observeOn(Schedulers.io())
+      .subscribe(wordsSubject::onNext);
   }
 
   static class Factory implements ViewModelProvider.Factory {
