@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">Room FTS Demo</string>
+  <string name="search">Search</string>
+  <string name="title">The Time Machine, by H. G. Wells</string>
+</resources>
