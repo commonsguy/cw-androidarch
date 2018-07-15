@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">Download Worker</string>
+  <string name="btn_title">Do the Download!</string>
+  <string name="msg_done">The download is done!</string>
+</resources>
