@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation 'com.android.support:recyclerview-v7:27.0.2'
-    implementation 'android.arch.lifecycle:runtime:1.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'android.arch.lifecycle:runtime:1.1.1'
     annotationProcessor 'android.arch.lifecycle:compiler:1.1.0'
 }
 

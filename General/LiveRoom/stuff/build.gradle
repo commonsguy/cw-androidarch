@@ -20,10 +20,10 @@ android {
 }
 
 dependencies {
-  implementation "android.arch.persistence.room:runtime:1.1.0"
-  annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
-  implementation 'android.arch.lifecycle:runtime:1.1.0'
-  implementation 'android.arch.lifecycle:livedata:1.1.0'
+  implementation "android.arch.persistence.room:runtime:1.1.1"
+  annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+  implementation 'android.arch.lifecycle:runtime:1.1.1'
+  implementation 'android.arch.lifecycle:livedata:1.1.1'
   androidTestImplementation "com.android.support:support-annotations:27.0.2"
-  androidTestImplementation 'com.android.support.test:rules:1.0.1'
+  androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }
