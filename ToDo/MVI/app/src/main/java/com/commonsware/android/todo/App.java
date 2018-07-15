@@ -35,7 +35,7 @@ public class App extends Application {
   }
 
   private void enableStrictMode() {
-    if (BuildConfig.DEBUG) {
+    if (BuildConfig.DEBUG && !"samsung".equals(Build.MANUFACTURER)) {
       StrictMode.ThreadPolicy.Builder b=new StrictMode.ThreadPolicy.Builder()
         .detectAll();
 

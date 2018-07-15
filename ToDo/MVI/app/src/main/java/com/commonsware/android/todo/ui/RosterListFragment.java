@@ -36,6 +36,7 @@ import com.commonsware.android.todo.R;
 import com.commonsware.android.todo.impl.Action;
 import com.commonsware.android.todo.impl.FilterMode;
 import com.commonsware.android.todo.impl.RosterReport;
+import com.commonsware.android.todo.impl.ToDoDatabase;
 import com.commonsware.android.todo.impl.ToDoModel;
 import com.commonsware.android.todo.impl.ViewState;
 import com.commonsware.android.todo.util.UriReportWriter;
@@ -124,6 +125,14 @@ public class RosterListFragment extends AbstractRosterFragment {
 
       case R.id.share:
         share();
+        return(true);
+
+      case R.id.backup:
+        backup();
+        return(true);
+
+      case R.id.restore:
+        restore();
         return(true);
     }
 
@@ -261,6 +270,19 @@ public class RosterListFragment extends AbstractRosterFragment {
     catch (ActivityNotFoundException e) {
       Toast.makeText(getActivity(), R.string.msg_export, Toast.LENGTH_LONG).show();
     }
+  }
+
+  private void backup() {
+    launchAndGoAway(true);
+  }
+
+  private void restore() {
+    launchAndGoAway(false);
+  }
+
+  private void launchAndGoAway(boolean isBackup) {
+    ToDoDatabase.shutdown();
+    startActivity(BackupRestoreActivity.newIntent(getActivity(), isBackup));
   }
 
   void updateFilter(ViewState state) {

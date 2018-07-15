@@ -14,6 +14,8 @@
 
 package com.commonsware.android.todo.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +29,10 @@ public class MainActivity extends FragmentActivity
   private static final String BACK_STACK_SHOW="showModel";
   private boolean isDualPane=false;
   private DisplayFragment display;
+
+  static Intent newIntent(Context ctxt) {
+    return new Intent(ctxt, MainActivity.class);
+  }
   
   @Override
   public void onCreate(Bundle savedInstanceState) {

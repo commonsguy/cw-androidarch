@@ -27,6 +27,9 @@
   <string name="is_completed">Item is completed</string>
   <string name="back_description">Cancel edit</string>
   <string name="error_description">Please provide a description!</string>
+  <string name="menu_backup">Backup</string>
+  <string name="menu_restore">Restore</string>
+  <string name="msg_wait">Please wait...</string>
 
   <plurals name="snackbar_delete">
     <item quantity="one">Delete this item?</item>

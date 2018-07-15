@@ -16,4 +16,12 @@
   <style name="ActionButton" parent="@android:style/Widget.ActionButton">
     <item name="android:drawablePadding">@dimen/action_item_padding</item>
   </style>
+
+  <style name="Theme.Apptheme.Dialog" parent="@android:style/Theme.Material.Light.Dialog.NoActionBar">
+    <item name="android:colorPrimary">@color/primary</item>
+    <item name="android:colorPrimaryDark">@color/primary_dark</item>
+    <item name="android:colorAccent">@color/accent</item>
+    <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+    <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+  </style>
 </resources>

@@ -40,6 +40,13 @@ public abstract class ToDoDatabase extends RoomDatabase {
     return(INSTANCE);
   }
 
+  public synchronized static void shutdown() {
+    if (INSTANCE!=null) {
+      INSTANCE.close();
+      INSTANCE=null;
+    }
+  }
+
   private static ToDoDatabase create(Context ctxt, boolean memoryOnly) {
     RoomDatabase.Builder<ToDoDatabase> b;
 

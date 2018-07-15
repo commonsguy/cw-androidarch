@@ -27,6 +27,10 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity
+      android:name=".ui.BackupRestoreActivity"
+      android:process=":backup"
+      android:theme="@style/Theme.Apptheme.Dialog" />
     <activity android:name="com.squareup.leakcanary.internal.DisplayLeakActivity">
       <intent-filter>
         <action
