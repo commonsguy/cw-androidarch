@@ -24,13 +24,14 @@ import android.support.v7.widget.SnapHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.commonsware.cwac.crossport.design.widget.TabLayout;
+import com.commonsware.cwac.crossport.design.widget.TabLayoutLite;
 
 public class MainActivity extends FragmentActivity {
   private final SnapHelper snapperCarr=new PagerSnapHelper();
   private RecyclerViewEx pager;
   private PageAdapter adapter;
   private LinearLayoutManager layoutManager;
-  private TabLayout tabs;
+  private TabLayoutLite tabs;
   private MenuItem remove;
   private EditorViewModel viewModel;
 
@@ -60,19 +61,19 @@ public class MainActivity extends FragmentActivity {
       tabs.addTab(tabs.newTab().setText(adapter.getTabText(i)));
     }
 
-    tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+    tabs.addOnTabSelectedListener(new TabLayoutLite.OnTabSelectedListener() {
       @Override
-      public void onTabSelected(TabLayout.Tab tab) {
+      public void onTabSelected(TabLayoutLite.Tab tab) {
         pager.smoothScrollToPosition(tab.getPosition());
       }
 
       @Override
-      public void onTabUnselected(TabLayout.Tab tab) {
+      public void onTabUnselected(TabLayoutLite.Tab tab) {
         // unused
       }
 
       @Override
-      public void onTabReselected(TabLayout.Tab tab) {
+      public void onTabReselected(TabLayoutLite.Tab tab) {
         // unused
       }
     });
@@ -167,8 +168,8 @@ public class MainActivity extends FragmentActivity {
 
     adapter.swap(first, second);
 
-    TabLayout.Tab firstTab=tabs.getTabAt(first);
-    TabLayout.Tab secondTab=tabs.getTabAt(second);
+    TabLayoutLite.Tab firstTab=tabs.getTabAt(first);
+    TabLayoutLite.Tab secondTab=tabs.getTabAt(second);
     CharSequence firstText=firstTab.getText();
 
     firstTab.setText(secondTab.getText());
