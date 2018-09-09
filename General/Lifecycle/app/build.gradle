@@ -4,7 +4,8 @@ dependencies {
   implementation "com.android.support:recyclerview-v7:27.1.1"
   implementation "com.android.support:support-fragment:27.1.1"
   implementation "android.arch.lifecycle:runtime:1.1.1"
-  implementation "android.arch.lifecycle:common-java8:1.1.0"
+  implementation "android.arch.lifecycle:common-java8:1.1.1"
+  implementation "android.arch.core:runtime:1.1.1"
 }
 
 android {

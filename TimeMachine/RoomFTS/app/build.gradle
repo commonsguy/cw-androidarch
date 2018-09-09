@@ -29,7 +29,7 @@ dependencies {
   implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
   implementation 'com.android.support:recyclerview-v7:27.1.1'
   implementation 'com.android.support:support-fragment:27.1.1'
-  implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+  implementation 'com.android.support.constraint:constraint-layout:1.1.3'
   implementation 'android.arch.paging:runtime:1.0.1'
   implementation 'android.arch.lifecycle:extensions:1.1.1'
   implementation 'android.arch.persistence.room:runtime:1.1.1'
