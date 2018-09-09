@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
@@ -56,7 +57,7 @@ class Repository {
       .map(strings -> (randomSubset(strings, count)))
       .map(pieces -> TextUtils.join(" ", pieces))
       .flatMap(checker::validate)
-      .retryWhen(errors -> errors.zipWith(Observable.range(1, 3), (n, i) -> i)));
+      .retryWhen(errors -> errors.flatMap(new Retryifier(3))));
   }
 
   synchronized private Observable<List<String>> getWordsFromSource(Uri source) {
@@ -118,5 +119,23 @@ class Repository {
     }
 
     return(result);
+  }
+
+  static class Retryifier implements Function<Throwable, Observable<Integer>> {
+    private int count;
+    private int max;
+
+    Retryifier(int max) {
+      this.max=max;
+    }
+
+    @Override
+    public Observable<Integer> apply(Throwable error) {
+      if (count++<max) {
+        return Observable.just(count);
+      }
+
+      return Observable.error(error);
+    }
   }
 }

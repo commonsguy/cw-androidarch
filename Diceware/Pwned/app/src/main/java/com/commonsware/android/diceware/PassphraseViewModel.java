@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -35,6 +37,7 @@ class PassphraseViewModel extends ViewModel {
   private final Repository repo;
   private Uri source=Uri.parse("file:///android_asset/eff_short_wordlist_2_0.txt");
   private int count=6;
+  private Disposable refreshDisposable=Disposables.empty();
 
   PassphraseViewModel(Context ctxt, Bundle state) {
     repo=Repository.get(ctxt);
@@ -48,6 +51,13 @@ class PassphraseViewModel extends ViewModel {
     livePassphrase=LiveDataReactiveStreams
       .fromPublisher(passphraseSubject.toFlowable(BackpressureStrategy.LATEST));
     refresh();
+  }
+
+  @Override
+  protected void onCleared() {
+    super.onCleared();
+
+    refreshDisposable.dispose();
   }
 
   void onSaveInstanceState(Bundle state) {
@@ -74,7 +84,9 @@ class PassphraseViewModel extends ViewModel {
   }
 
   void refresh() {
-    repo.getPassphrase(source, count)
+    refreshDisposable.dispose();
+
+    refreshDisposable=repo.getPassphrase(source, count)
       .subscribeOn(Schedulers.io())
       .subscribe(passphraseSubject::onNext,
         t -> Log.e(getClass().getSimpleName(), "Exception loading words", t));

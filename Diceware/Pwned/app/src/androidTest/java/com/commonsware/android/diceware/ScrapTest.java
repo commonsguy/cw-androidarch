@@ -58,6 +58,17 @@ public class ScrapTest {
   }
 
   @Test
+  public void whereIsTheThrowable3() {
+    Observable.just("foo")
+      .map(this::justBlowUp)
+      .retryWhen(errors -> errors.flatMap(new Repository.Retryifier(3)))
+      .subscribe(s -> stringResult=s, throwable -> throwableResult=throwable);
+
+    assertNull(stringResult);
+    assertNotNull(throwableResult);
+  }
+
+  @Test
   public void retryUntil() {
     Observable.just("foo")
       .map(this::justBlowUp)
