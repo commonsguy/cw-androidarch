@@ -36,7 +36,7 @@ public class DownloadWorker extends Worker {
   public Result doWork() {
     OkHttpClient client=new OkHttpClient();
     Request request=new Request.Builder()
-      .url(getInputData().getString(KEY_URL, null))
+      .url(getInputData().getString(KEY_URL))
       .build();
 
     File dir=getApplicationContext().getCacheDir();

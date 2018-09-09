@@ -27,9 +27,10 @@ public class UnZIPWorker extends Worker {
   @NonNull
   @Override
   public Result doWork() {
-    File downloadedFile=new File(getInputData().getString(KEY_ZIPFILE, null));
+    File downloadedFile=new File(getInputData().getString(KEY_ZIPFILE));
     File dir=getApplicationContext().getCacheDir();
-    File resultDir=new File(dir, getInputData().getString(KEY_RESULTDIR, "results"));
+    String resultDirData=getInputData().getString(KEY_RESULTDIR);
+    File resultDir=new File(dir, resultDirData==null ? "results" : resultDirData);
 
     try {
       ZipUtils.unzip(downloadedFile, resultDir, 2048, 1024*1024*16);
