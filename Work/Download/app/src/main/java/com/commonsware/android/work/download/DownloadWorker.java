@@ -34,13 +34,13 @@ public class DownloadWorker extends Worker {
   public Result doWork() {
     OkHttpClient client=new OkHttpClient();
     Request request=new Request.Builder()
-      .url(getInputData().getString(KEY_URL, null))
+      .url(getInputData().getString(KEY_URL))
       .build();
 
     try (Response response=client.newCall(request).execute()) {
       File dir=getApplicationContext().getCacheDir();
       File downloadedFile=
-        new File(dir, getInputData().getString(KEY_FILENAME, null));
+        new File(dir, getInputData().getString(KEY_FILENAME));
       BufferedSink sink=Okio.buffer(Okio.sink(downloadedFile));
 
       sink.writeAll(response.body().source());
