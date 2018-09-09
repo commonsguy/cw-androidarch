@@ -133,6 +133,8 @@ public class FlowableTests {
     store.delete(updated);
     assertTrue("Should not have timed out!", latch.await(1, TimeUnit.SECONDS));
     assertEquals(0, foundTrips.size());
+
+    assert(store.flowAllTrips().blockingFirst().size()==0);
   }
 
   private boolean areIdentical(Plan one, Plan two) {

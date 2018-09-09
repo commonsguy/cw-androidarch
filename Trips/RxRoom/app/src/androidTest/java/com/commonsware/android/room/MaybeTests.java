@@ -64,6 +64,10 @@ public class MaybeTests {
     store.update(updated);
     assertTrip(store, updated);
 
+    final Trip missing=store.maybeTripById("asefasdfasd").blockingGet();
+
+    assertNull(missing);
+
     store.delete(updated);
     assertEquals(0, store.maybeAllTrips().blockingGet().size());
     assertNull(store.maybeTripById("this does not exist").blockingGet());
