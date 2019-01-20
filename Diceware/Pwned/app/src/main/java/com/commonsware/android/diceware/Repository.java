@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2017 CommonsWare, LLC
+ Copyright (c) 2017-2019 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -14,6 +14,7 @@
 
 package com.commonsware.android.diceware;
 
+import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,14 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import io.reactivex.Observable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 
 class Repository {
   private static final String ASSET_FILENAME="eff_short_wordlist_2_0.txt";
   private static volatile Repository INSTANCE;
-  private final Context ctxt;
+  private final Application ctxt;
   private final ConcurrentHashMap<Uri, List<String>> cache=new ConcurrentHashMap<>();
   private SecureRandom random=new SecureRandom();
   private final PwnedCheck checker=new PwnedCheck(new OkHttpClient());
@@ -49,7 +49,7 @@ class Repository {
   }
 
   private Repository(Context ctxt) {
-    this.ctxt=ctxt.getApplicationContext();
+    this.ctxt=(Application)ctxt.getApplicationContext();
   }
 
   Observable<String> getPassphrase(Uri source, final int count) {
@@ -57,7 +57,7 @@ class Repository {
       .map(strings -> (randomSubset(strings, count)))
       .map(pieces -> TextUtils.join(" ", pieces))
       .flatMap(checker::validate)
-      .retryWhen(errors -> errors.flatMap(new Retryifier(3))));
+      .retryWhen(errors -> errors.retry(3)));
   }
 
   synchronized private Observable<List<String>> getWordsFromSource(Uri source) {
@@ -119,23 +119,5 @@ class Repository {
     }
 
     return(result);
-  }
-
-  static class Retryifier implements Function<Throwable, Observable<Integer>> {
-    private int count;
-    private int max;
-
-    Retryifier(int max) {
-      this.max=max;
-    }
-
-    @Override
-    public Observable<Integer> apply(Throwable error) {
-      if (count++<max) {
-        return Observable.just(count);
-      }
-
-      return Observable.error(error);
-    }
   }
 }

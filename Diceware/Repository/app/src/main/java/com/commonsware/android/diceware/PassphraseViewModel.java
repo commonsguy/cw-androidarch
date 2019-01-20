@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2017 CommonsWare, LLC
+ Copyright (c) 2017-2019 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -15,7 +15,7 @@
 package com.commonsware.android.diceware;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
@@ -23,18 +23,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import java.util.List;
-import io.reactivex.BackpressureStrategy;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 
 class PassphraseViewModel extends ViewModel {
   private static final String STATE_SOURCE="source";
   private static final String STATE_COUNT="count";
-  private final BehaviorSubject<List<String>> wordsSubject;
-  private final LiveData<List<String>> liveWords;
+  private final MutableLiveData<List<String>> liveWords=new MutableLiveData<>();
   private final Repository repo;
   private Uri source=Uri.parse("file:///android_asset/eff_short_wordlist_2_0.txt");
   private int count=6;
+  private Disposable sub=Disposables.empty();
 
   PassphraseViewModel(Context ctxt, Bundle state) {
     repo=Repository.get(ctxt);
@@ -44,10 +44,12 @@ class PassphraseViewModel extends ViewModel {
       count=state.getInt(STATE_COUNT, 6);
     }
 
-    wordsSubject=BehaviorSubject.create();
-    liveWords=LiveDataReactiveStreams
-      .fromPublisher(wordsSubject.toFlowable(BackpressureStrategy.LATEST));
     refresh();
+  }
+
+  @Override
+  protected void onCleared() {
+    sub.dispose();
   }
 
   void onSaveInstanceState(Bundle state) {
@@ -74,9 +76,10 @@ class PassphraseViewModel extends ViewModel {
   }
 
   void refresh() {
-    repo.getWords(source, count)
+    sub.dispose();
+    sub=repo.getWords(source, count)
       .observeOn(Schedulers.io())
-      .subscribe(wordsSubject::onNext);
+      .subscribe(liveWords::postValue);
   }
 
   static class Factory implements ViewModelProvider.Factory {

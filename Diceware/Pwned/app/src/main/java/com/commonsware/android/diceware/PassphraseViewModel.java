@@ -1,5 +1,5 @@
 /***
- Copyright (c) 2017 CommonsWare, LLC
+ Copyright (c) 2017-2019 CommonsWare, LLC
  Licensed under the Apache License, Version 2.0 (the "License"); you may not
  use this file except in compliance with the License. You may obtain a copy
  of the License at http://www.apache.org/licenses/LICENSE-2.0. Unless required
@@ -15,7 +15,7 @@
 package com.commonsware.android.diceware;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
@@ -23,17 +23,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import io.reactivex.BackpressureStrategy;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 
 class PassphraseViewModel extends ViewModel {
   private static final String STATE_SOURCE="source";
   private static final String STATE_COUNT="count";
-  private final BehaviorSubject<String> passphraseSubject;
-  private final LiveData<String> livePassphrase;
+  private final MutableLiveData<String> livePassphrase=new MutableLiveData<>();
   private final Repository repo;
   private Uri source=Uri.parse("file:///android_asset/eff_short_wordlist_2_0.txt");
   private int count=6;
@@ -47,9 +44,6 @@ class PassphraseViewModel extends ViewModel {
       count=state.getInt(STATE_COUNT, 6);
     }
 
-    passphraseSubject=BehaviorSubject.create();
-    livePassphrase=LiveDataReactiveStreams
-      .fromPublisher(passphraseSubject.toFlowable(BackpressureStrategy.LATEST));
     refresh();
   }
 
@@ -88,7 +82,7 @@ class PassphraseViewModel extends ViewModel {
 
     refreshDisposable=repo.getPassphrase(source, count)
       .subscribeOn(Schedulers.io())
-      .subscribe(passphraseSubject::onNext,
+      .subscribe(livePassphrase::postValue,
         t -> Log.e(getClass().getSimpleName(), "Exception loading words", t));
   }
 
