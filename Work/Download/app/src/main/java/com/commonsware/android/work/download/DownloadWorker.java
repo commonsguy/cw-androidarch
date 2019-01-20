@@ -14,11 +14,14 @@
 
 package com.commonsware.android.work.download;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import java.io.File;
 import java.io.IOException;
+import androidx.work.ListenableWorker;
 import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -28,6 +31,11 @@ import okio.Okio;
 public class DownloadWorker extends Worker {
   public static final String KEY_URL="url";
   public static final String KEY_FILENAME="filename";
+
+  public DownloadWorker(@NonNull Context context,
+                        @NonNull WorkerParameters workerParams) {
+    super(context, workerParams);
+  }
 
   @NonNull
   @Override
@@ -49,9 +57,9 @@ public class DownloadWorker extends Worker {
     catch (IOException e) {
       Log.e(getClass().getSimpleName(), "Exception downloading file", e);
 
-      return Result.FAILURE;
+      return ListenableWorker.Result.failure();
     }
 
-    return Result.SUCCESS;
+    return ListenableWorker.Result.success();
   }
 }

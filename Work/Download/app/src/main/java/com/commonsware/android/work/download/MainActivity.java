@@ -21,16 +21,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 import com.commonsware.android.work.download.databinding.ActivityMainBinding;
-import androidx.work.WorkStatus;
+import androidx.work.WorkInfo;
 
 public class MainActivity extends AppCompatActivity {
   @BindingAdapter("android:enabled")
-  public static void setEnabled(View v, WorkStatus status) {
-    if (status==null) {
+  public static void setEnabled(View v, WorkInfo info) {
+    if (info==null) {
       v.setEnabled(true);
     }
     else {
-      v.setEnabled(status.getState().isFinished());
+      v.setEnabled(info.getState().isFinished());
     }
   }
 

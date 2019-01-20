@@ -26,7 +26,7 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
-import androidx.work.test.WorkManagerTestInitHelper;
+import androidx.work.testing.WorkManagerTestInitHelper;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

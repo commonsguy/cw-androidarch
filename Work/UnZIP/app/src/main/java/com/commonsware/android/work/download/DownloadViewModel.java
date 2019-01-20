@@ -21,11 +21,11 @@ import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-import androidx.work.WorkStatus;
 
 public class DownloadViewModel extends ViewModel {
-  public final MediatorLiveData<WorkStatus> liveWorkStatus=new MediatorLiveData<>();
+  public final MediatorLiveData<WorkInfo> liveWorkStatus=new MediatorLiveData<>();
 
   public void doTheDownload() {
     OneTimeWorkRequest downloadWork=
@@ -57,8 +57,8 @@ public class DownloadViewModel extends ViewModel {
       .then(unZIPWork)
       .enqueue();
 
-    final LiveData<WorkStatus> liveOpStatus=
-      WorkManager.getInstance().getStatusById(unZIPWork.getId());
+    final LiveData<WorkInfo> liveOpStatus=
+      WorkManager.getInstance().getWorkInfoByIdLiveData(unZIPWork.getId());
 
     liveWorkStatus.addSource(liveOpStatus, workStatus -> {
       liveWorkStatus.setValue(workStatus);

@@ -14,15 +14,23 @@
 
 package com.commonsware.android.work.download;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.commonsware.cwac.security.ZipUtils;
 import java.io.File;
+import androidx.work.ListenableWorker;
 import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
 public class UnZIPWorker extends Worker {
   public static final String KEY_ZIPFILE="zipFile";
   public static final String KEY_RESULTDIR="resultDir";
+
+  public UnZIPWorker(@NonNull Context context,
+                     @NonNull WorkerParameters workerParams) {
+    super(context, workerParams);
+  }
 
   @NonNull
   @Override
@@ -39,9 +47,9 @@ public class UnZIPWorker extends Worker {
     catch (Exception e) {
       Log.e(getClass().getSimpleName(), "Exception unZIPing file", e);
 
-      return Result.FAILURE;
+      return ListenableWorker.Result.failure();
     }
 
-    return Result.SUCCESS;
+    return ListenableWorker.Result.success();
   }
 }
