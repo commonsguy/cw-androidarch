@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 26
-  buildToolsVersion "27.0.3"
+  compileSdkVersion 28
+  
 
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 26
+    targetSdkVersion 28
     versionCode 1
     versionName "1.0"
     testApplicationId "com.commonsware.android.room.types.test"
@@ -22,6 +22,6 @@ android {
 dependencies {
   implementation "android.arch.persistence.room:runtime:1.1.1"
   annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-  androidTestImplementation "com.android.support:support-annotations:26.1.0"
+  androidTestImplementation "com.android.support:support-annotations:28.0.0"
   androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }
